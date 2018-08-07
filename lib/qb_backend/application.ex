@@ -1,4 +1,7 @@
 defmodule QbBackend.Application do
+  @moduledoc """
+  Application module for the Quick Bytes Backedn Application
+  """
   use Application
 
   # See https://hexdocs.pm/elixir/Application.html
