@@ -22,6 +22,7 @@ defmodule QbBackend.DataCase do
       import Ecto.Changeset
       import Ecto.Query
       import QbBackend.DataCase
+      import QbBackend.Factory
     end
   end
 
