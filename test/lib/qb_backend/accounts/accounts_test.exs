@@ -12,8 +12,22 @@ defmodule QbBackend.AccountsTest do
 
   @valid_user_attrs %{name: "Zacck Osiemo", hash: "jkjbjbwiubu"}
   @valid_profile_attrs %{username: "superbike_z", role: "reader"}
+  @id "a7062358-021d-4273-827a-87c38cb213fe"
 
   describe "Accounts Context " do
+
+    test "get_user/1 gets a user if one exits" do
+      user = insert(:user)
+      assert Repo.aggregate(User, :count, :id) == 1
+      assert {:ok, %User{} = usr} = Accounts.get_user(user.id)
+      assert usr.id == user.id
+    end
+
+    test "get_user/1 errors out is user with id doesn't exist" do
+      assert Repo.aggregate(User, :count, :id) == 0
+      assert {:error, "No user with id #{@id} on the system"} == Accounts.get_user(@id)
+    end
+
     test "create_user/1 creates user with correct attrs" do
       assert Repo.aggregate(User, :count, :id) == 0
       assert {:ok, %User{} = usr} = Accounts.create_user(@valid_user_attrs)
@@ -75,6 +89,6 @@ defmodule QbBackend.AccountsTest do
        assert Repo.aggregate(Profile, :count, :id) == 0
        assert deleted_prof.id == profile.id
      end
-       
+
   end
 end

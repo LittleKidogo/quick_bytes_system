@@ -11,6 +11,18 @@ defmodule QbBackend.Accounts do
   }
 
   @doc """
+  This function takes the id of a user and proceeds to find the associated account
+  """
+  @spec get_user(String.t()) :: {:ok, User.t()} | {:error, String.t()}
+  def get_user(id) do
+    with %User{} = usr <- Repo.get_by(User, id: id) do
+      {:ok, usr}
+    else
+      nil -> {:error, "No user with id #{id} on the system"}
+    end
+  end
+
+  @doc """
   This function takes a map os attrubutes and creates a user record with that
   map of attributes
   """
@@ -69,6 +81,6 @@ defmodule QbBackend.Accounts do
   @spec delete_profile(Profile.t()) :: {:ok, Profile.t()} | {:error, Ecto.Changeset.t()}
   def delete_profile(%Profile{} = prf) do
     prf |> Repo.delete()
-  end 
+  end
 
 end
