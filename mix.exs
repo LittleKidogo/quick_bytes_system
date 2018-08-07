@@ -44,7 +44,8 @@ defmodule QbBackend.Mixfile do
       {:credo, "~> 0.10.0", only: [:dev, :test], runtime: false},
       {:bcrypt_elixir, "~> 0.12"},
       {:comeonin, "~> 4.0"},
-      {:ex_machina, "~> 2.2", only: [:dev, :test]}
+      {:ex_machina, "~> 2.2", only: [:dev, :test]},
+      {:guardian, "~> 1.1"}
     ]
   end
 
