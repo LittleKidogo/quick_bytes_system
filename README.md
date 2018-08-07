@@ -8,7 +8,7 @@ This is the Elixir backend API for `Quick Bytes` called `qb_backend`. qb_backend
 
 We love working and learning with the open source community and contributions are always welcome! We want to learn from you!
 To start helping go through
-- First read up on our contribution guidelines at [Contributing.md](https://github.com/LittleKidogo/quick_bytes_backend/blob/develop/.github/CONTRIBUTING.md)
+- First read up on our contribution guidelines at [Contributing.md](https://github.com/LittleKidogo/quick_bytes_backend/blob/develop/.github/contributing.md)
 - Then take a look at our issues and projects to see what you can work on
 
 ## Authors
