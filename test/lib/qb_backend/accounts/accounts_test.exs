@@ -12,6 +12,7 @@ defmodule QbBackend.AccountsTest do
 
   @valid_user_attrs %{name: "Zacck Osiemo", hash: "jkjbjbwiubu"}
   @valid_profile_attrs %{username: "superbike_z", role: "reader"}
+
   describe "Accounts Context " do
     test "create_user/1 creates user with correct attrs" do
       assert Repo.aggregate(User, :count, :id) == 0
@@ -25,6 +26,22 @@ defmodule QbBackend.AccountsTest do
        assert {:error, _changeset} = Accounts.create_user(%{})
        assert Repo.aggregate(User, :count, :id) == 0
      end
+
+     test "delete_user/1 deletes an exisiting user" do
+       user = insert(:user)
+       assert Repo.aggregate(User, :count, :id) == 1
+       assert {:ok, _usr} = Accounts.delete_user(user)
+       assert Repo.aggregate(User, :count, :id) == 0
+     end
+
+     test "update_user/2 updates an existing users details" do
+       user = insert(:user)
+       assert Repo.aggregate(User, :count, :id) == 1
+       assert {:ok, %User{} = usr} = Accounts.update_user(user, @valid_user_attrs)
+       assert usr.id == user.id
+       assert usr.name != user.name
+     end
+
 
      test "create_profile/2  creates a profile with correct attrs" do
        user = insert(:user)
@@ -41,5 +58,23 @@ defmodule QbBackend.AccountsTest do
        assert {:error, _changeset} = Accounts.create_profile(user, %{})
        assert Repo.aggregate(Profile, :count, :id) == 0
      end
+
+     test "update_profile/2 updates a profile" do
+       profile = insert(:profile)
+       assert Repo.aggregate(Profile, :count, :id) == 1
+       {:ok, %Profile{} = prf} = Accounts.update_profile(profile, @valid_profile_attrs)
+       assert Repo.aggregate(Profile, :count, :id) == 1
+       assert prf.id == profile.id
+       assert prf.username != profile.username
+     end
+
+     test "delete_profile/1 deletes a profile from the system" do
+       profile = insert(:profile)
+       assert Repo.aggregate(Profile, :count, :id) == 1
+       {:ok, %Profile{} = deleted_prof} = Accounts.delete_profile(profile)
+       assert Repo.aggregate(Profile, :count, :id) == 0
+       assert deleted_prof.id == profile.id
+     end
+       
   end
 end
