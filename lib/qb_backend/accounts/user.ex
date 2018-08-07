@@ -5,7 +5,6 @@ defmodule QbBackend.Accounts.User do
   """
   use Ecto.Schema
 
-  use Ecto.Schema
   import Ecto.Changeset
   alias Comeonin.Bcrypt
 
