@@ -9,7 +9,8 @@ defmodule QbBackend.Factory do
 
   def user_factory do
     %User{
-      name: sequence(:name, &"name-#{&1}")
+      name: sequence(:name, &"name-#{&1}"),
+      hash: sequence(:hash, &"hash-#{&1}")
     }
   end
 
