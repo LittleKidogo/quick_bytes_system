@@ -1,20 +1,25 @@
 # QbBackend
 
-To start your Phoenix server:
 
-  * Install dependencies with `mix deps.get`
-  * Create and migrate your database with `mix ecto.create && mix ecto.migrate`
-  * Install Node.js dependencies with `cd assets && npm install`
-  * Start Phoenix endpoint with `mix phx.server`
+This is the Elixir backend API for `Quick Bytes` called `qb_backend`. qb_backend is the Elixir application that powers our documents library at Little Kidogo.
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
-Ready to run in production? Please [check our deployment guides](http://www.phoenixframework.org/docs/deployment).
+## Getting Started
 
-## Learn more
+We love working and learning with the open source community and contributions are always welcome! We want to learn from you!
+To start helping go through
+- First read up on our contribution guidelines at [Contributing.md](https://github.com/LittleKidogo/quick_bytes_backend/blob/develop/.github/CONTRIBUTING.md)
+- Then take a look at our issues and projects to see what you can work on
 
-  * Official website: http://www.phoenixframework.org/
-  * Guides: http://phoenixframework.org/docs/overview
-  * Docs: https://hexdocs.pm/phoenix
-  * Mailing list: http://groups.google.com/group/phoenix-talk
-  * Source: https://github.com/phoenixframework/phoenix
+## Authors
+
+* **Zacck Osiemo** - *Initial work* - [Zacck](https://github.com/zacck )
+* **Carla Espost** - *Initial work* - [Carla](https://github.com/CIEspost)
+* **Erickson Muchiri** - *Initial work* - [Jahil](https://github.com/Cybot1711)
+* **Wanjiku Macharia** - *Initial work*
+
+See also the list of [contributors](https://github.com/LittleKidogo/quick_bytes_backend/graphs/contributors) who are participating in this project.
+
+## License
+
+This project is licensed under the MIT License
