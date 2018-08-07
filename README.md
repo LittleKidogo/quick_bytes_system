@@ -15,8 +15,8 @@ To start helping go through
 
 * **Zacck Osiemo** - *Initial work* - [Zacck](https://github.com/zacck )
 * **Carla Espost** - *Initial work* - [Carla](https://github.com/CIEspost)
-* **Erickson Muchiri** - *Initial work* - [Jahil](https://github.com/Cybot1711)
-* **Wanjiku Macharia** - *Initial work*
+* **Erickson Muchiri** - *Initial work* - [Ricoh](https://github.com/br4inii)
+* **Wanjiku Macharia** - *Initial work* - [WanjikuMac](https://github.com/WanjikuMac)
 
 See also the list of [contributors](https://github.com/LittleKidogo/quick_bytes_backend/graphs/contributors) who are participating in this project.
 
