@@ -7,7 +7,6 @@ This module defines the schema for the comments section of our app.
 
   alias QbBackend.{
     Posts.Comment,
-    #Posts.Manual,
     Accounts.Profile
   }
 
@@ -18,7 +17,6 @@ This module defines the schema for the comments section of our app.
 
   schema "comments" do
     field :body, :string
-    #belongs_to :manual, Manual, foreign_key: :manual_id, type: :binary_id
     belongs_to :profile, Profile, foreign_key: :manual_id, type: :binary_id
 
     timestamps(inserted_at: :created_on, updated_at: :modified_on)
