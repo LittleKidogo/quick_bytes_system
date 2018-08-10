@@ -7,8 +7,9 @@ defmodule QbBackend.Repo.Migrations.CreateComments do
       add :body, :string
       add :profile_id, references(:profiles, type: :binary_id)
 
-      timestamps()
+      timestamps(inserted_at: :added_on, updated_at: :edited_on)
     end
 
+    create index(:comments, [:profile_id])
   end
 end

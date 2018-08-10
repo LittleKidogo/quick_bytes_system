@@ -19,7 +19,7 @@ This module defines the schema for the comments section of our app.
     field :body, :string
     belongs_to :profile, Profile, foreign_key: :manual_id, type: :binary_id
 
-    timestamps(inserted_at: :created_on, updated_at: :modified_on)
+    timestamps(inserted_at: :added_on, updated_at: :edited_on)
   end
 
   @doc """
