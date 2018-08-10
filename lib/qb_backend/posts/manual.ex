@@ -1,7 +1,7 @@
 defmodule QbBackend.Posts.Manual do
-  @moduledoc"""
+  @moduledoc """
   This module holds changeset used to work with the manual
-"""
+  """
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -38,8 +38,8 @@ defmodule QbBackend.Posts.Manual do
   This changeset takes in the profile struct and a map containing parameters
   and proceeds to match the parameters in the map to the schema above
 """
-  @spec profchangeset(Profile.t(), map()) :: Ecto.Changeset.t()
-  def profchangeset(%Profile{} = profile, attrs) do
+  @spec create_changeset(Profile.t(), map()) :: Ecto.Changeset.t()
+  def create_changeset(%Profile{} = profile, attrs) do
     %Manual{}
     |> Manual.changeset(attrs)
     |> put_assoc(:profile, profile)
