@@ -4,7 +4,6 @@ defmodule QbBackend.Application do
   """
   use Application
 
-
   def start(_type, _args) do
     import Supervisor.Spec
 
@@ -13,7 +12,7 @@ defmodule QbBackend.Application do
       # Start the Ecto repository
       supervisor(QbBackend.Repo, []),
       # Start the endpoint when the application starts
-      supervisor(QbBackendWeb.Endpoint, []),
+      supervisor(QbBackendWeb.Endpoint, [])
       # Start your own worker by calling: QbBackend.Worker.start_link(arg1, arg2, arg3)
       # worker(QbBackend.Worker, [arg1, arg2, arg3]),
     ]

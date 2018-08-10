@@ -4,6 +4,7 @@ defmodule QbBackend.Auth do
   """
   import Ecto.Query, only: [from: 2]
   alias Comeonin.Bcrypt
+
   alias QbBackend.{
     Accounts.User,
     Accounts.Profile,
@@ -15,15 +16,16 @@ defmodule QbBackend.Auth do
   if the user is valid
   """
   def authenticate(username, plain_text_password) do
-    query = from p in Profile, where: p.username == ^username
+    query = from(p in Profile, where: p.username == ^username)
 
-    Repo.one(query)
+    query
+    |> Repo.one()
     |> Repo.preload(:user)
     |> check_password(plain_text_password)
   end
 
   @spec check_password(User.t(), String.t()) :: {:ok, User.t()} | {:error, String.t()}
-  defp check_password(nil, _),  do: {:error, "Access Denied - Invalid Authentication Details"}
+  defp check_password(nil, _), do: {:error, "Access Denied - Invalid Authentication Details"}
 
   defp check_password(profile, pass) do
     with true <- Bcrypt.checkpw(pass, profile.user.hash) do

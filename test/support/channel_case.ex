@@ -25,13 +25,13 @@ defmodule QbBackendWeb.ChannelCase do
     end
   end
 
-
   setup tags do
     :ok = Ecto.Adapters.SQL.Sandbox.checkout(QbBackend.Repo)
+
     unless tags[:async] do
       Ecto.Adapters.SQL.Sandbox.mode(QbBackend.Repo, {:shared, self()})
     end
+
     :ok
   end
-
 end

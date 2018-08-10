@@ -8,7 +8,7 @@ defmodule QbBackend.Accounts.User do
   import Ecto.Changeset
   alias Comeonin.Bcrypt
 
-  alias  QbBackend.Accounts.User
+  alias QbBackend.Accounts.User
 
   @type t :: %__MODULE__{}
 
@@ -28,7 +28,7 @@ defmodule QbBackend.Accounts.User do
   a user record for the database
   """
   @spec changeset(User.t(), map()) :: {:ok, Ecto.Changeset.t()} | {:error, Ecto.Changeset.t()}
-  def changeset(%User{} = usr, attrs)  do
+  def changeset(%User{} = usr, attrs) do
     usr
     |> cast(attrs, [:name, :hash])
     |> validate_required([:name, :hash])

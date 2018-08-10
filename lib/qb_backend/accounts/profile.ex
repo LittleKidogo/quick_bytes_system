@@ -7,7 +7,7 @@ defmodule QbBackend.Accounts.Profile do
 
   import Ecto.Changeset
 
-  alias  QbBackend.{
+  alias QbBackend.{
     Accounts.User,
     Accounts.Profile
   }
@@ -19,12 +19,12 @@ defmodule QbBackend.Accounts.Profile do
   @foreign_key_type :binary_id
 
   schema "profiles" do
-    field :username, :string
-    field :bio, :string
+    field(:username, :string)
+    field(:bio, :string)
     # "reader","author","publisher"
-    field :role, :string
-    field :avatar_link, :string
-    belongs_to :user, User, foreign_key: :user_id, type: :binary_id
+    field(:role, :string)
+    field(:avatar_link, :string)
+    belongs_to(:user, User, foreign_key: :user_id, type: :binary_id)
 
     timestamps(inserted_at: :created_on, updated_at: :modified_on)
   end
@@ -37,14 +37,15 @@ defmodule QbBackend.Accounts.Profile do
     prof
     |> cast(attrs, [:username, :bio, :role, :avatar_link])
     |> validate_required([:username, :role])
-    |> validate_inclusion(:role, ["reader","author","publisher"])
+    |> validate_inclusion(:role, ["reader", "author", "publisher"])
   end
 
   @doc """
   This function takes a user and a map of attributes that it then uses to
   build a profile associated with the user
   """
-  @spec create_changeset(User.t(), map()) :: {:ok, Ecto.Changeset.t()} | {:error, Ecto.Changeset.t()}
+  @spec create_changeset(User.t(), map()) ::
+          {:ok, Ecto.Changeset.t()} | {:error, Ecto.Changeset.t()}
   def create_changeset(%User{} = usr, attrs) do
     %Profile{}
     |> changeset(attrs)

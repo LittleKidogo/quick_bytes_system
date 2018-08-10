@@ -28,7 +28,6 @@ defmodule QbBackend.APICase do
     end
   end
 
-
   setup tags do
     :ok = Ecto.Adapters.SQL.Sandbox.checkout(QbBackend.Repo)
 
@@ -39,14 +38,18 @@ defmodule QbBackend.APICase do
     # get the current profile using a tag
     # it the test has the authenticated tag the conn is given a profile to auth
     # with this should be extended to allow types of profiles
-    {conn, current_profile} = cond do
-    tags[:authenticated] ->
-      build_conn()
-      |> add_auth_header(tags[:authenticated])
-    true ->
-      conn = build_conn()
-      {conn, nil}
-    end
+
+  # credo:disable-for-lines:10
+    {conn, current_profile} =
+      cond do
+        tags[:authenticated] ->
+          build_conn()
+          |> add_auth_header(tags[:authenticated])
+
+        true ->
+          conn = build_conn()
+          {conn, nil}
+      end
 
     {:ok, conn: conn, current_profile: current_profile}
   end

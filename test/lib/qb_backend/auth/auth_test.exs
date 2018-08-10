@@ -15,16 +15,17 @@ defmodule QbBackend.AuthTest do
   describe "Auth Context" do
     @tag :simple
     test "authenticate/2  returns a user if one exists for the plain password" do
-      {:ok, user} = %User{} |> User.changeset(@creds)|> Repo.insert()
-      {:ok, profile} = Profile.create_changeset(user, @profile_creds) |> Repo.insert()
+      {:ok, user} = %User{} |> User.changeset(@creds) |> Repo.insert()
+      {:ok, profile} = user |> Profile.create_changeset(@profile_creds) |> Repo.insert()
       {:ok, %Profile{} = prof} = Auth.authenticate(profile.username, @creds[:hash])
       assert prof.username == @profile_creds[:username]
     end
 
     test "authenticate/2  returns an error if a corresponding user doesnt exist" do
       assert Repo.aggregate(User, :count, :id) == 0
-      assert {:error, "Access Denied - Invalid Authentication Details"} = Auth.authenticate("a5f13624-f084-4297-b67f-9e276945cc99", @creds[:hash])
+
+      assert {:error, "Access Denied - Invalid Authentication Details"} =
+               Auth.authenticate("a5f13624-f084-4297-b67f-9e276945cc99", @creds[:hash])
     end
   end
-
 end

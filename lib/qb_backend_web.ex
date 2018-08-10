@@ -28,8 +28,9 @@ defmodule QbBackendWeb do
 
   def view do
     quote do
-      use Phoenix.View, root: "lib/qb_backend_web/templates",
-                        namespace: QbBackendWeb
+      use Phoenix.View,
+        root: "lib/qb_backend_web/templates",
+        namespace: QbBackendWeb
 
       # Import convenience functions from controllers
       import Phoenix.Controller, only: [get_flash: 2, view_module: 1]

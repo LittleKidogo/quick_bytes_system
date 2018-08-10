@@ -82,5 +82,4 @@ defmodule QbBackend.Accounts do
   def delete_profile(%Profile{} = prf) do
     prf |> Repo.delete()
   end
-
 end
