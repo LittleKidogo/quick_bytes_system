@@ -6,6 +6,7 @@
 .DS_Store
 .qb_backend.iml
 .idea 
+qb_backend.iml
 
 # Generated on crash by the VM
 erl_crash.dump
