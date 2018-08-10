@@ -7,7 +7,8 @@ defmodule QbBackend.Posts.Manual do
 
   alias QbBackend.{
     Accounts.Profile,
-    Posts.Manual
+    Posts.Manual,
+    Posts.Tag
   }
 
   @type t :: %__MODULE__{}
@@ -20,6 +21,7 @@ defmodule QbBackend.Posts.Manual do
     field(:title, :string)
     field(:body, :string)
     belongs_to(:profile, Profile, foreign_key: :profile_id, type: :binary_id)
+    many_to_many :tags, Tag, join_through: "manuals_tags", join_keys: [manual_id: :id, tag_id: :id], on_replace: :delete
   end
 
   @doc """
