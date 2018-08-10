@@ -6,7 +6,8 @@ defmodule QbBackend.PostsTest do
 
   alias QbBackend.{
     Posts,
-    Posts.Manual
+    Posts.Manual,
+    Posts.Comment
   }
 
   @id "a7062358-021d-4273-827a-87c38cb213fe"
@@ -55,6 +56,42 @@ defmodule QbBackend.PostsTest do
         saved_manual = Repo.one(Manual)
         assert saved_manual.id == manual.id
         assert saved_manual.title == manual.title
+
+  @valid_comment_params %{body: "This is a valid comment."}
+
+  # Comment functions tests under Posts context
+  describe "Posts context" do
+    test "add_comment/2 adds a comment from a user profile" do
+      prof = insert(:prof)
+      assert Repo.aggregate(Comment, :count, :id) == 0
+      assert {:ok,%Comment{} = msg} = Posts.add_comment(prof, @valid_comment_params)
+      assert Repo.aggregate(Comment, :count, :id) == 1
+      assert msg.body == @valid_comment_params[:body]
+    end
+
+    test "add_comment/2 gives an error on invalid data" do
+      prof = insert(:prof)
+      assert Repo.aggregate(Comment, :count, :id) == 0
+      assert {:error, _changeset} = Posts.add_comment(prof, %{})
+      assert Repo.aggregate(Comment, :count, :id) == 0
+    end
+
+    test "edit_comment/2 updates the contents of the said comment" do
+      msg = insert(:msg)
+      assert Repo.aggregate(Comment, :count, :id) == 1
+      {:ok, %Comment{} = newmsg} = Posts.edt_comment(msg, @valid_comment_params)
+      assert Repo.aggregate(Comment, :count, :id) == 1
+      assert newmsg.id == msg.id
+      assert newmsg.body != msg.body
+    end
+
+    test "delete_comment/1 deletes a given comment" do
+      msg = insert(:msg)
+      assert Repo.aggregate(Comment, :count, :id) == 1
+      {:ok, %Comment{} = del_msg} = Posts.delete_comment(msg)
+      assert Repo.aggregate(Comment, :count,:id) == 0
+      assert del_msg.id == msg.id
+
     end
   end
 end
