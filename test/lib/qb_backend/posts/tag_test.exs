@@ -6,7 +6,7 @@ defmodule QbBackend.Posts.TagTest do
 
   alias QbBackend.{
     Posts.Tag
-    }
+  }
   @valid_tag %{name: "@cshikoh"}
   @invalid_tag %{}
 
@@ -23,10 +23,10 @@ defmodule QbBackend.Posts.TagTest do
   end
   test "should associate a tag to a manual" do
     tag = insert(:tag)
-    manual = insert(:manual, @valid_tag)
-    tag = tag |> Repo.preload(:manual)
-    changeset = tag.add_to_manual(tag,manual)
+    manual = insert(:manual)
+    tag = tag |> Repo.preload(:manuals)
+    changeset = Tag.add_to_manual(tag, manual)
     assert changeset.valid?
-    assert changeset.changes.tag
+    assert changeset.changes.manuals
   end
 end
