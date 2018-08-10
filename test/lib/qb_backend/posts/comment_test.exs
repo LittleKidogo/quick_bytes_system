@@ -6,8 +6,7 @@ defmodule QbBackend.Posts.CommentTest do
   use QbBackend.DataCase
 
   alias QbBackend.{
-    Posts.Comment,
-    Accounts.Profile
+    Posts.Comment
   }
 
   @valid_params %{body: "To ensure that you pass all the tests,
@@ -29,7 +28,9 @@ defmodule QbBackend.Posts.CommentTest do
     end
 
     test "comments update changeset" do
-      changeset = Comment.create_changeset(%Profile{},@updated_params)
+      profile = insert(:profile)
+      manual = insert(:manual)
+      changeset = Comment.create_changeset(profile, manual, @updated_params)
       assert changeset.valid?
     end
   end
