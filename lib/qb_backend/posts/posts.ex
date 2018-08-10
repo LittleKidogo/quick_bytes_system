@@ -50,10 +50,10 @@ defmodule QbBackend.Posts do
   this function takes a Manual struct and map as parameters and creates a comment
   linked to the specified Manual.
   """
-  @spec add_comment(Profile.t(), map()) :: {:ok, Comment.t()} | {:error, Ecto.Changeset.t()}
-  def add_comment(%Profile{} = profile, params) do
+  @spec add_comment(Profile.t(), Manual.t(),  map()) :: {:ok, Comment.t()} | {:error, Ecto.Changeset.t()}
+  def add_comment(%Profile{} = profile, %Manual{} = manual, params) do
     profile
-    |> Comment.create_changeset(params)
+    |> Comment.create_changeset(manual, params)
     |> Repo.insert()
   end
 
