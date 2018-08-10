@@ -7,7 +7,8 @@ This module defines the schema for the comments section of our app.
 
   alias QbBackend.{
     Posts.Comment,
-    Accounts.Profile
+    Accounts.Profile,
+    Posts.Manual
   }
 
   @type t :: %__MODULE__{}
@@ -17,7 +18,8 @@ This module defines the schema for the comments section of our app.
 
   schema "comments" do
     field :body, :string
-    belongs_to :profile, Profile, foreign_key: :manual_id, type: :binary_id
+    belongs_to :profile, Profile, foreign_key: :profile_id, type: :binary_id
+    belongs_to :manual, Manual, foreign_key: :manual_id, type: :binary_id
 
     timestamps(inserted_at: :added_on, updated_at: :edited_on)
   end
@@ -35,10 +37,11 @@ This module defines the schema for the comments section of our app.
   @doc """
   this function adds a comment to the manuals
   """
-  @spec create_changeset(Profile.t(), map()) :: {:ok, Ecto.Changeset.t()} | {:error, Ecto.Changeset.t()}
-  def create_changeset(%Profile{} = post, params) do
+  @spec create_changeset(Profile.t(), Manual.t(), map()) :: {:ok, Ecto.Changeset.t()} | {:error, Ecto.Changeset.t()}
+  def create_changeset(%Profile{} = profile, %Manual{} =  manual, params) do
     %Comment{}
     |> changeset(params)
-    |> put_assoc(:profile, post)
+    |> put_assoc(:profile, profile)
+    |> put_assoc(:manual, manual)
   end
 end
