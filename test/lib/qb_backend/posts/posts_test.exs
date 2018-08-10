@@ -26,7 +26,7 @@ defmodule QbBackend.PostsTest do
     test "create_manual/1 saves manual with valid data" do
        profile = insert(:profile)
        assert Repo.aggregate(Manual, :count, :id) == 0
-       assert {:ok, %Manual{} = mnl} =  Posts.create_manual(profile, @valid_manual)
+       assert {:ok, %Manual{}} =  Posts.create_manual(profile, @valid_manual)
        assert Repo.aggregate(Manual, :count, :id) == 1
     end
 
