@@ -1,4 +1,5 @@
 [![CircleCI](https://circleci.com/gh/LittleKidogo/quick_bytes_backend.svg?style=svg)](https://circleci.com/gh/LittleKidogo/quick_bytes_backend)
+[![Coverage Status](https://coveralls.io/repos/github/LittleKidogo/quick_bytes_backend/badge.svg?branch=develop)](https://coveralls.io/github/LittleKidogo/quick_bytes_backend?branch=develop)
 
 # QbBackend
 
