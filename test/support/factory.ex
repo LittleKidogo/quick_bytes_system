@@ -31,7 +31,7 @@ defmodule QbBackend.Factory do
   def comment_factory do
     %Comment{
       body: sequence(:body, &"body-#{&1}"),
-      profile: build(:profile)
+      profile: build(:profile),
     }
   end
 
