@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/LittleKidogo/quick_bytes_backend.svg?style=svg)](https://circleci.com/gh/LittleKidogo/quick_bytes_backend)
+
 # QbBackend
 
 
