@@ -8,7 +8,8 @@ defmodule QbBackend.Factory do
     Accounts.User,
     Accounts.Profile,
     Posts.Manual,
-    Posts.Comment
+    Posts.Comment,
+    Posts.Image
   }
 
   def user_factory do
@@ -40,6 +41,14 @@ defmodule QbBackend.Factory do
       profile: build(:profile),
       title: sequence(:title, &"title-#{&1}"),
       body: sequence(:body, &"manual body -#{&1}")
+    }
+  end
+
+  def image_factory do
+    %Image{
+      name: sequence(:name, &"name-#{&1}"),
+      image_link: sequence(:image_link, &"#{&1}-image_link"),
+      profile: build(:profile)
     }
   end
 end
