@@ -6,7 +6,7 @@ defmodule QbBackend.Repo.Migrations.CreateTag do
       add :id, :binary_id, primary_key: true
       add :name, :string
 
-      timestamps()
+      timestamps(inserted_at: :added_on)
     end
 
   end
