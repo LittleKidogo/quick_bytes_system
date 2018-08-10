@@ -7,7 +7,8 @@ defmodule QbBackend.Posts do
     Repo,
     Posts.Manual,
     Posts.Comment,
-    Accounts.Profile
+    Accounts.Profile,
+    Posts.Image
   }
 
   @doc """
@@ -56,7 +57,7 @@ defmodule QbBackend.Posts do
   end
 
   @doc """
-  this function takes a Comment stratcure and a map as params and updates the comment
+  this function takes a Comment stracture and a map as params and updates the comment
   """
   @spec edit_comment(Comment.t(), map()) :: {:ok, Comment.t()} | {:error, Ecto.Changeset.t()}
   def edit_comment(%Comment{} = comment, params) do
@@ -73,4 +74,25 @@ defmodule QbBackend.Posts do
     comment
     |> Repo.delete()
   end
+
+  @doc """
+  this function takes an Image struct and a map as params and adds an image to the manual
+  """
+  @spec attach_image(Profile.t(), Manual.t(), map()) ::
+          {:ok, Image.t()} | {:error, Ecto.Changeset.t()}
+  def attach_image(%Profile{} = profile, %Manual{} = manual, params) do
+    profile
+    |> Image.create_changeset(manual, params)
+    |> Repo.insert()
+  end
+
+  @doc """
+  this function delets an image struct from a manual
+  """
+  @spec delete_image(Image.t()):: {:ok, Image.t()} | {:error, Ecto.Changeset.t()}
+  def delete_image(%Image{} = image) do
+    image
+    |> Repo.delete()
+  end
+
 end
