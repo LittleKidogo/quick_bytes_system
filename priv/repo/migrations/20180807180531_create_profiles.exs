@@ -14,5 +14,6 @@ defmodule QbBackend.Repo.Migrations.CreateProfiles do
     end
 
     create index(:profiles, [:user_id])
+    create unique_index(:profiles, [:username])
   end
 end
