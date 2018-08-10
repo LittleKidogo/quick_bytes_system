@@ -6,7 +6,9 @@ defmodule QbBackend.Posts.ImageTest do
   use QbBackend.DataCase
 
   alias QbBackend.{
-    Posts.Image
+    Posts.Image,
+    Accounts.Profile,
+    Posts.Manual
   }
 
   @valid_params %{image_link: "https://commons.wikimedia.org/wiki/File:20091007_Graffiti_Shanghai_7373.jpg", name: "2D"}
@@ -22,6 +24,12 @@ defmodule QbBackend.Posts.ImageTest do
     test "invalid/blank image" do
       changeset = Image.changeset(%Image{}, @no_image_params)
       refute changeset.valid?
+    end
+
+    test "update changesets" do
+      image = insert(:image)
+      changeset = Image.create_changeset(image,@valid_params)
+      assert changeset.valid?
     end
   end
 
