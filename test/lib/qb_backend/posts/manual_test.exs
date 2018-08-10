@@ -6,7 +6,6 @@ defmodule QbBackend.Posts.ManualTest do
 
   alias QbBackend.{
     Posts.Manual,
-    Posts.Profile
   }
 
   @valid_manual %{title: "1,000 ways to die", body: " 1. Death by paperbag"}
