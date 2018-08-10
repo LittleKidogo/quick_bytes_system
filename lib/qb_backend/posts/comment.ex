@@ -1,7 +1,7 @@
 defmodule QbBackend.Posts.Comment do
-@moduledoc """
-This module defines the schema for the comments section of our app.
-"""
+  @moduledoc """
+  This module defines the schema for the comments section of our app.
+  """
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -17,9 +17,9 @@ This module defines the schema for the comments section of our app.
   @foreign_key_type :binary_id
 
   schema "comments" do
-    field :body, :string
-    belongs_to :profile, Profile, foreign_key: :profile_id, type: :binary_id
-    belongs_to :manual, Manual, foreign_key: :manual_id, type: :binary_id
+    field(:body, :string)
+    belongs_to(:profile, Profile, foreign_key: :profile_id, type: :binary_id)
+    belongs_to(:manual, Manual, foreign_key: :manual_id, type: :binary_id)
 
     timestamps(inserted_at: :added_on, updated_at: :edited_on)
   end
@@ -37,8 +37,9 @@ This module defines the schema for the comments section of our app.
   @doc """
   this function adds a comment to the manuals
   """
-  @spec create_changeset(Profile.t(), Manual.t(), map()) :: {:ok, Ecto.Changeset.t()} | {:error, Ecto.Changeset.t()}
-  def create_changeset(%Profile{} = profile, %Manual{} =  manual, params) do
+  @spec create_changeset(Profile.t(), Manual.t(), map()) ::
+          {:ok, Ecto.Changeset.t()} | {:error, Ecto.Changeset.t()}
+  def create_changeset(%Profile{} = profile, %Manual{} = manual, params) do
     %Comment{}
     |> changeset(params)
     |> put_assoc(:profile, profile)

@@ -5,7 +5,7 @@ defmodule QbBackend.Posts.ManualTest do
   use QbBackend.DataCase
 
   alias QbBackend.{
-    Posts.Manual,
+    Posts.Manual
   }
 
   @valid_manual %{title: "1,000 ways to die", body: " 1. Death by paperbag"}
@@ -33,6 +33,6 @@ defmodule QbBackend.Posts.ManualTest do
       changeset = Manual.create_changeset(profile, @valid_manual)
       assert changeset.valid?
       assert changeset.changes.profile
-     end
+    end
   end
 end

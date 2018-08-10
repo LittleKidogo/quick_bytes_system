@@ -8,18 +8,18 @@ defmodule QbBackend.Posts.Manual do
   alias QbBackend.{
     Accounts.Profile,
     Posts.Manual
-    }
+  }
 
   @type t :: %__MODULE__{}
 
-  #binary key setup
+  # binary key setup
   @primary_key {:id, :binary_id, autogenerate: true}
   @derive {Phoenix.Param, key: :id}
 
   schema "manuals" do
-    field :title, :string
-    field :body, :string
-    belongs_to :profile, Profile, foreign_key: :profile_id, type: :binary_id
+    field(:title, :string)
+    field(:body, :string)
+    belongs_to(:profile, Profile, foreign_key: :profile_id, type: :binary_id)
   end
 
   @doc """
@@ -35,9 +35,9 @@ defmodule QbBackend.Posts.Manual do
   end
 
   @doc """
-  This changeset takes in the profile struct and a map containing parameters
-  and proceeds to match the parameters in the map to the schema above
-"""
+    This changeset takes in the profile struct and a map containing parameters
+    and proceeds to match the parameters in the map to the schema above
+  """
   @spec create_changeset(Profile.t(), map()) :: Ecto.Changeset.t()
   def create_changeset(%Profile{} = profile, attrs) do
     %Manual{}

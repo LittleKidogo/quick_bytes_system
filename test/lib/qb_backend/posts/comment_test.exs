@@ -15,10 +15,9 @@ defmodule QbBackend.Posts.CommentTest do
   @invalid_params %{}
   @updated_params %{body: "updated the comment"}
 
-
   describe "comments changesets" do
     test "valid comment" do
-      changeset = Comment.changeset(%Comment{},@valid_params)
+      changeset = Comment.changeset(%Comment{}, @valid_params)
       assert changeset.valid?
     end
 

@@ -39,7 +39,7 @@ defmodule QbBackend.APICase do
     # it the test has the authenticated tag the conn is given a profile to auth
     # with this should be extended to allow types of profiles
 
-  # credo:disable-for-lines:10
+    # credo:disable-for-lines:10
     {conn, current_profile} =
       cond do
         tags[:authenticated] ->

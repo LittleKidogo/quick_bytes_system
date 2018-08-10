@@ -4,11 +4,11 @@ defmodule QbBackend.Posts do
   """
 
   alias QbBackend.{
-      Repo,
-      Posts.Manual,
-      Posts.Comment,
-      Accounts.Profile
-    }
+    Repo,
+    Posts.Manual,
+    Posts.Comment,
+    Accounts.Profile
+  }
 
   @doc """
    This function takes the manual identification and proceeds to find the associated manual
@@ -32,7 +32,6 @@ defmodule QbBackend.Posts do
     |> Repo.insert()
   end
 
-
   @doc """
   This function takes a manual and a map of update attributes that it uses to
   update the manual
@@ -44,13 +43,12 @@ defmodule QbBackend.Posts do
     |> Repo.update()
   end
 
-  #Comments related functions
-
   @doc """
   this function takes a Manual struct and map as parameters and creates a comment
   linked to the specified Manual.
   """
-  @spec add_comment(Profile.t(), Manual.t(),  map()) :: {:ok, Comment.t()} | {:error, Ecto.Changeset.t()}
+  @spec add_comment(Profile.t(), Manual.t(), map()) ::
+          {:ok, Comment.t()} | {:error, Ecto.Changeset.t()}
   def add_comment(%Profile{} = profile, %Manual{} = manual, params) do
     profile
     |> Comment.create_changeset(manual, params)
