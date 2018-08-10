@@ -12,6 +12,7 @@ defmodule QbBackend.PostsTest do
 
   @id "a7062358-021d-4273-827a-87c38cb213fe"
   @valid_manual %{title: "1,000 ways to die", body: " 1. Death by paperbag"}
+  @valid_comment_params %{body: "This is a valid comment."}
   describe "Posts Context" do
     test "get_manual/1 gets a manual if one exists" do
         manual = insert(:manual)
@@ -56,30 +57,30 @@ defmodule QbBackend.PostsTest do
         saved_manual = Repo.one(Manual)
         assert saved_manual.id == manual.id
         assert saved_manual.title == manual.title
-
-  @valid_comment_params %{body: "This is a valid comment."}
+    end
 
   # Comment functions tests under Posts context
-  describe "Posts context" do
-    test "add_comment/2 adds a comment from a user profile" do
+    test "add_comment/3 adds a comment from a user profile" do
       profile = insert(:profile)
+      manual = insert(:manual)
       assert Repo.aggregate(Comment, :count, :id) == 0
-      assert {:ok, %Comment{} = msg} = Posts.add_comment(profile, @valid_comment_params) |> IO.inspect()
+      assert {:ok, %Comment{} = msg} = Posts.add_comment(profile, manual, @valid_comment_params)
       assert Repo.aggregate(Comment, :count, :id) == 1
       assert msg.body == @valid_comment_params[:body]
     end
 
-    test "add_comment/2 gives an error on invalid data" do
+    test "add_comment/3 gives an error on invalid data" do
       profile = insert(:profile)
+      manual = insert(:manual)
       assert Repo.aggregate(Comment, :count, :id) == 0
-      assert {:error, _changeset} = Posts.add_comment(profile, %{}) |> IO.inspect()
+      assert {:error, _changeset} = Posts.add_comment(profile, manual, %{})
       assert Repo.aggregate(Comment, :count, :id) == 0
     end
 
     test "edit_comment/2 updates the contents of the said comment" do
       msg = insert(:comment)
       assert Repo.aggregate(Comment, :count, :id) == 1
-      {:ok, %Comment{} = newmsg} = Posts.edt_comment(msg, @valid_comment_params)
+      {:ok, %Comment{} = newmsg} = Posts.edit_comment(msg, @valid_comment_params)
       assert Repo.aggregate(Comment, :count, :id) == 1
       assert newmsg.id == msg.id
       assert newmsg.body != msg.body
@@ -91,7 +92,6 @@ defmodule QbBackend.PostsTest do
       {:ok, %Comment{} = del_msg} = Posts.delete_comment(msg)
       assert Repo.aggregate(Comment, :count,:id) == 0
       assert del_msg.id == msg.id
-
     end
   end
 end
