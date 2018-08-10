@@ -10,7 +10,14 @@ defmodule QbBackend.Mixfile do
       compilers: [:phoenix, :gettext] ++ Mix.compilers,
       start_permanent: Mix.env == :prod,
       aliases: aliases(),
-      deps: deps()
+      deps: deps(),
+      test_coverage: [tool: ExCoveralls],
+      preferred_cli_env: [
+          "coveralls": :test,
+          "coveralls.detail": :test,
+          "coveralls.post": :test,
+          "coveralls.html": :test
+      ]
     ]
   end
 
@@ -45,7 +52,8 @@ defmodule QbBackend.Mixfile do
       {:bcrypt_elixir, "~> 0.12"},
       {:comeonin, "~> 4.0"},
       {:ex_machina, "~> 2.2", only: [:dev, :test]},
-      {:guardian, "~> 1.1"}
+      {:guardian, "~> 1.1"},
+      {:excoveralls, "~> 0.8", only: :test}
     ]
   end
 
