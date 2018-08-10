@@ -6,7 +6,8 @@ defmodule QbBackend.Factory do
 
   alias QbBackend.{
     Accounts.User,
-    Accounts.Profile
+    Accounts.Profile,
+    Posts.Manual
   }
 
   def user_factory do
@@ -23,6 +24,14 @@ defmodule QbBackend.Factory do
       role: sequence(:role, ["reader", "author", "publisher"]),
       avatar_link: sequence(:avatar_link, &"link-#{&1}"),
       user: build(:user)
+    }
+  end
+
+  def manual_factory do
+    %Manual{
+      profile: build(:profile),
+      title: sequence(:title, &"title-#{&1}"),
+      body: sequence(:body, &"manual body -#{&1}")
     }
   end
 end
