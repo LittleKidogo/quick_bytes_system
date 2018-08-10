@@ -18,7 +18,7 @@ defmodule QbBackend.Posts.Tag do
   schema "tags" do
     field :name, :string
     many_to_many :manuals, Manual, join_through: "manuals_tags", join_keys: [tag_id: :id, manual_id: :id], on_replace: :delete
-    timestamps()
+    timestamps(inserted_at: :added_on)
   end
 
   @doc """
