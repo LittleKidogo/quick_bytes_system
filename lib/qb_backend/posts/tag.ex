@@ -25,10 +25,20 @@ defmodule QbBackend.Posts.Tag do
   This function takes in a struct and a map containing parameters
   and proceeds to match the parameters to the schema above
   """
-  @spec changeset(%Tag{}, map()) :: Ecto.Chnageset.t()
+  @spec changeset(Tag.t(), map()) :: Ecto.Chnageset.t()
   def changeset(tag, attrs) do
     tag
     |> cast(attrs, [:name])
     |> validate_required([:name])
+  end
+
+  @doc """
+  This fuction builds a changeset for an association between a tag and a Manual
+  """
+  @spec add_to_manual(Tag.t(), Manual.t()) :: {:ok, Tag.t()} | {:error, Ecto.Changeset.t()}
+  def add_to_manual(%Tag{manuals: manuals} = tag, %Manual{} = manual) do
+    tag
+    |> changeset(%{})
+    |> put_assoc(:manuals, [manual] ++ manuals)
   end
 end
