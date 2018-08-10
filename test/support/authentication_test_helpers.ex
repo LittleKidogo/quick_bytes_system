@@ -21,7 +21,7 @@ defmodule QbBackend.AuthenticationTestHelpers do
   """
   def authenticate(conn, profile) do
     # get the token for the user
-    {:ok, token, _} = profile |> QbBackend.Guardian.encode_and_sign()
+    {:ok, token, _} = profile |> QbBackendU.Auth.Guardian.encode_and_sign()
 
     # add the users token to the request header
     conn
