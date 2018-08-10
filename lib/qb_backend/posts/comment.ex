@@ -39,6 +39,6 @@ This module defines the schema for the comments section of our app.
   def create_changeset(%Profile{} = post, params) do
     %Comment{}
     |> changeset(params)
-    |> put_assoc(:manual, post)
+    |> put_assoc(:profile, post)
   end
 end
