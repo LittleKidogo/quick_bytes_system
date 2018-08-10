@@ -6,15 +6,18 @@ defmodule QbBackend.AuthTest do
 
   alias QbBackend.{
     Auth,
-    Accounts.User
+    Accounts.User,
+    Accounts.Profile
   }
 
   @creds %{name: "Zacck", hash: "hash"}
-
+  @profile_creds %{username: "superbike_z", role: "publisher"}
   describe "Auth Context" do
+    @tag :simple
     test "authenticate/2  returns a user if one exists for the plain password" do
       {:ok, user} = %User{} |> User.changeset(@creds)|> Repo.insert()
-      {:ok, %User{} = _usr } = Auth.authenticate(user.id, @creds[:hash])
+      {:ok, profile} = Profile.create_changeset(user, @profile_creds) |> Repo.insert()
+      {:ok, result} = Auth.authenticate(profile.username, @creds[:hash]) |> IO.inspect()
     end
 
     test "authenticate/2  returns an error if a corresponding user doesnt exist" do
