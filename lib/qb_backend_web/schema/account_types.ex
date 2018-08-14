@@ -7,8 +7,8 @@ defmodule QbBackendWeb.Schema.AccountTypes do
 
   @desc "an input object"
   input_object :session_input do
-    field :username, non_null(:string)
-    field :hash, non_null(:string)
+    field(:username, non_null(:string))
+    field(:hash, non_null(:string))
   end
 
   @desc "A session object on the system"
@@ -23,13 +23,12 @@ defmodule QbBackendWeb.Schema.AccountTypes do
     field(:hash, :string)
   end
 
-  @desc  "Contains a profile object of user on the system"
+  @desc "Contains a profile object of user on the system"
   object :profile do
+    field(:id, :id)
     field(:username, :string)
     field(:role, :string)
     field(:bio, :string)
     field(:avatar_link, :string)
   end
-
 end
-

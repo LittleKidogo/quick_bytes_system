@@ -87,7 +87,7 @@ defmodule QbBackend.Accounts do
   This function takes a profile id and fetches a profile if one exists with the id, it returns an error
   if one does not exist
   """
-  @spec get_profile(String.t()) :: {:ok, Profile.t()} |  {:error, String.t()}
+  @spec get_profile(String.t()) :: {:ok, Profile.t()} | {:error, String.t()}
   def get_profile(id) do
     with %Profile{} = prof <- Repo.get_by(Profile, id: id) do
       {:ok, prof}

@@ -11,13 +11,15 @@ defmodule QbBackend.Posts.ImageTest do
     Posts.Manual
   }
 
-  @valid_params %{image_link: "https://commons.wikimedia.org/wiki/File:20091007_Graffiti_Shanghai_7373.jpg", name: "2D"}
+  @valid_params %{
+    image_link: "https://commons.wikimedia.org/wiki/File:20091007_Graffiti_Shanghai_7373.jpg",
+    name: "2D"
+  }
   @no_image_params %{name: "no image"}
-
 
   describe "image changesets" do
     test "valid image" do
-      changeset = Image.changeset(%Image{},@valid_params)
+      changeset = Image.changeset(%Image{}, @valid_params)
       assert changeset.valid?
     end
 
@@ -28,9 +30,8 @@ defmodule QbBackend.Posts.ImageTest do
 
     test "update changesets" do
       image = insert(:image)
-      changeset = Image.create_changeset(image,@valid_params)
+      changeset = Image.create_changeset(image, @valid_params)
       assert changeset.valid?
     end
   end
-
 end

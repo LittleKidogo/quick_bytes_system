@@ -14,7 +14,10 @@ defmodule QbBackend.PostsTest do
   @id "a7062358-021d-4273-827a-87c38cb213fe"
   @valid_manual %{title: "1,000 ways to die", body: " 1. Death by paperbag"}
   @valid_comment_params %{body: "This is a valid comment."}
-  @valid_image_params %{name: "2D", image_link: "https://commons.wikimedia.org/wiki/File:20091007_Graffiti_Shanghai_7373.jpg"}
+  @valid_image_params %{
+    name: "2D",
+    image_link: "https://commons.wikimedia.org/wiki/File:20091007_Graffiti_Shanghai_7373.jpg"
+  }
   @no_image_params %{name: "no image"}
   describe "Posts Context" do
     test "get_manual/1 gets a manual if one exists" do
@@ -117,7 +120,7 @@ defmodule QbBackend.PostsTest do
     test "delete_image/1 actually delets a specified image" do
       img = insert(:image)
       assert Repo.aggregate(Image, :count, :id) == 1
-      {:ok, %Image{}= del_img} = Posts.delete_image(img)
+      {:ok, %Image{} = del_img} = Posts.delete_image(img)
       assert Repo.aggregate(Image, :count, :id) == 0
       assert del_img.id == img.id
     end

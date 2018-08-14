@@ -89,10 +89,9 @@ defmodule QbBackend.Posts do
   @doc """
   this function delets an image struct from a manual
   """
-  @spec delete_image(Image.t()):: {:ok, Image.t()} | {:error, Ecto.Changeset.t()}
+  @spec delete_image(Image.t()) :: {:ok, Image.t()} | {:error, Ecto.Changeset.t()}
   def delete_image(%Image{} = image) do
     image
     |> Repo.delete()
   end
-
 end

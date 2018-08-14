@@ -17,10 +17,10 @@ defmodule QbBackend.Posts.Image do
   @foreign_key_type :binary_id
 
   schema "images" do
-    field :image_link, :string
-    field :name, :string
-    belongs_to :manual, Manual, foreign_key: :manual_id, type: :binary_id
-    belongs_to :profile, Profile, foreign_key: :profile_id, type: :binary_id
+    field(:image_link, :string)
+    field(:name, :string)
+    belongs_to(:manual, Manual, foreign_key: :manual_id, type: :binary_id)
+    belongs_to(:profile, Profile, foreign_key: :profile_id, type: :binary_id)
 
     timestamps(inserted_at: :added_on, updated_at: :edited_on)
   end
@@ -37,8 +37,9 @@ defmodule QbBackend.Posts.Image do
   @doc """
   function to add a new image associated to the manual
   """
-  @spec create_changeset(Profile.t(), Manual.t(), map()) :: {:ok, Ecto.Changeset.t()} | {:error, Ecto.Changeset.t()}
-  def create_changeset(%Profile{} = profile, %Manual{} =manual, params) do
+  @spec create_changeset(Profile.t(), Manual.t(), map()) ::
+          {:ok, Ecto.Changeset.t()} | {:error, Ecto.Changeset.t()}
+  def create_changeset(%Profile{} = profile, %Manual{} = manual, params) do
     %Image{}
     |> changeset(params)
     |> put_assoc(:manual, manual)

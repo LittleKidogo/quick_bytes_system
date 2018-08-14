@@ -1,4 +1,4 @@
-defmodule QbBackend.APICase do
+defmodule QbBackendWeb.ApiCase do
   @moduledoc """
   This module defines the setup for tests requiring
   access to the application's GraphQL API layer.
@@ -18,6 +18,7 @@ defmodule QbBackend.APICase do
 
   using do
     quote do
+      use Phoenix.ConnTest
       alias QbBackend.Repo
 
       import Ecto

@@ -1,5 +1,5 @@
 defmodule QbBackend.Posts.Tag do
-  @moduledoc"""
+  @moduledoc """
     This module hold the changeset and schema used by Tags
   """
   use Ecto.Schema
@@ -8,7 +8,7 @@ defmodule QbBackend.Posts.Tag do
   alias QbBackend.{
     Posts.Tag,
     Posts.Manual
-    }
+  }
 
   @type t :: %__MODULE__{}
 
@@ -16,8 +16,16 @@ defmodule QbBackend.Posts.Tag do
   @derive {Phoenix.Param, key: :id}
 
   schema "tags" do
-    field :name, :string
-    many_to_many :manuals, Manual, join_through: "manuals_tags", join_keys: [tag_id: :id, manual_id: :id], on_replace: :delete
+    field(:name, :string)
+
+    many_to_many(
+      :manuals,
+      Manual,
+      join_through: "manuals_tags",
+      join_keys: [tag_id: :id, manual_id: :id],
+      on_replace: :delete
+    )
+
     timestamps(inserted_at: :added_on)
   end
 

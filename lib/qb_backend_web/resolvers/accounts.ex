@@ -7,11 +7,12 @@ defmodule QbBackendWeb.Resolvers.Accounts do
     Auth.Guardian,
     Accounts,
     Accounts.User,
-    Accounts.Profile
+    Accounts.Profile,
+    Repo
   }
 
   @spec get_people(any(), map, any()) :: {:ok, list(Person.t())} | {:error, String.t()}
-  def get_people( _, _, _) do
+  def get_people(_, _, _) do
     {:ok, Repo.all(User)}
   end
 
@@ -25,4 +26,3 @@ defmodule QbBackendWeb.Resolvers.Accounts do
     end
   end
 end
-

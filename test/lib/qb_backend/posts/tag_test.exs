@@ -1,5 +1,5 @@
 defmodule QbBackend.Posts.TagTest do
-  @moduledoc"""
+  @moduledoc """
     This module holds tests for the changeset functions under tag
   """
   use QbBackend.DataCase
@@ -7,20 +7,22 @@ defmodule QbBackend.Posts.TagTest do
   alias QbBackend.{
     Posts.Tag
   }
+
   @valid_tag %{name: "@cshikoh"}
   @invalid_tag %{}
 
   describe "Tag Test" do
     test "Valid if the name parameter is available" do
-      changeset = Tag.changeset(%Tag{},@valid_tag)
+      changeset = Tag.changeset(%Tag{}, @valid_tag)
       assert changeset.valid?
     end
-    test "Invalid if the name parameter is not right" do
-      changeset = Tag.changeset(%Tag{},@invalid_tag)
-      refute changeset.valid?
 
+    test "Invalid if the name parameter is not right" do
+      changeset = Tag.changeset(%Tag{}, @invalid_tag)
+      refute changeset.valid?
     end
   end
+
   test "should associate a tag to a manual" do
     tag = insert(:tag)
     manual = insert(:manual)
