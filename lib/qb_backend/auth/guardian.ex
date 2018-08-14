@@ -5,11 +5,11 @@ defmodule QbBackend.Auth.Guardian do
   use Guardian, otp_app: :qb_backend
 
   # get accounts context to get or create user
-  alias QbBackend.{Accounts, Accounts.User}
+  alias QbBackend.{Accounts, Accounts.Profile}
 
   # get a field that can Identify a user
-  def subject_for_token(%User{} = user, _claims) do
-    {:ok, "User:#{user.id}"}
+  def subject_for_token(%Profile{} = prof, _claims) do
+    {:ok, "Profile:#{prof.id}"}
   end
 
   # we can't Identify that resource
@@ -22,6 +22,6 @@ defmodule QbBackend.Auth.Guardian do
   def resource_from_claims(_), do: {:error, :missing_subject}
 
   # pic a resource from the provided subject
-  defp resource_from_subject("User:" <> id), do: Accounts.get_user(id)
+  defp resource_from_subject("Profile:" <> id), do: Accounts.get_profile(id)
   defp resource_from_subject(_), do: {:error, :unknown_resource_type}
 end
