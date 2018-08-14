@@ -19,6 +19,7 @@ defmodule QbBackendWeb.Schema.AccountTypes do
 
   @desc "Contains a user object in the system "
   object :user do
+    field(:id, :id)
     field(:name, :string)
     field(:hash, :string)
   end
