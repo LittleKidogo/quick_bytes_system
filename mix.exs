@@ -53,7 +53,9 @@ defmodule QbBackend.Mixfile do
       {:comeonin, "~> 4.0"},
       {:ex_machina, "~> 2.2", only: [:dev, :test]},
       {:guardian, "~> 1.1"},
-      {:excoveralls, "~> 0.8", only: :test}
+      {:excoveralls, "~> 0.8", only: :test},
+      {:absinthe_ecto, "~> 0.1.0"},
+      {:absinthe_plug, "~> 1.4.0"}
     ]
   end
 
