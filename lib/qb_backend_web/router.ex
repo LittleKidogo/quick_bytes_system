@@ -26,6 +26,6 @@ defmodule QbBackendWeb.Router do
 
     forward("/api", Absinthe.Plug, schema: QbBackendWeb.Schema)
 
-    forward("/graphiql", Absinthe.Plug.GraphiQL, schema: QbBackendWeb.Schema, interface: :simple)
+    forward("/graphiql", Absinthe.Plug.GraphiQL, schema: QbBackendWeb.Schema, interface: :playground)
   end
 end
