@@ -56,7 +56,7 @@ defmodule QbBackend.Accounts do
   This function takes a user and a map of attributes it then proceeds to create
   a profile linked to the user with a reader role as default
   """
-  @spec create_profile(User.t(), map()) :: {:ok, Profile.t()} | {:error, Ecto.Changeset.t()}
+  @spec create_profile(User.t(), map()) :: {:ok, Profile.t()} | {:error, String.t()}
   def create_profile(%User{} = usr, attrs) do
     usr
     |> Profile.create_changeset(attrs)
@@ -81,5 +81,18 @@ defmodule QbBackend.Accounts do
   @spec delete_profile(Profile.t()) :: {:ok, Profile.t()} | {:error, Ecto.Changeset.t()}
   def delete_profile(%Profile{} = prf) do
     prf |> Repo.delete()
+  end
+
+  @doc """
+  This function takes a profile id and fetches a profile if one exists with the id, it returns an error
+  if one does not exist
+  """
+  @spec get_profile(String.t()) :: {:ok, Profile.t()} |  {:error, String.t()}
+  def get_profile(id) do
+    with %Profile{} = prof <- Repo.get_by(Profile, id: id) do
+      {:ok, prof}
+    else
+      nil -> {:error, "No Profile with id #{id} on the system"}
+    end
   end
 end
