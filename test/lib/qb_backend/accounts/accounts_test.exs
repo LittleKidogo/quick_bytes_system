@@ -27,6 +27,22 @@ defmodule QbBackend.AccountsTest do
       assert {:error, "No user with id #{@id} on the system"} == Accounts.get_user(@id)
     end
 
+
+    @tag :profile
+    test "get_profile/1 get a profile if one exists" do
+      profile = insert(:profile)
+      assert Repo.aggregate(Profile, :count, :id) == 1
+      assert {:ok, %Profile{} = prof} = Accounts.get_profile(profile.id)
+      assert prof.id == profile.id
+    end
+
+    @tag :profile
+    test "get_profile/1 errors out is user with id doesn't exist" do
+      assert Repo.aggregate(Profile, :count, :id) == 0
+      assert {:error, "No Profile with id #{@id} on the system"} == Accounts.get_profile(@id)
+    end
+
+
     test "create_user/1 creates user with correct attrs" do
       assert Repo.aggregate(User, :count, :id) == 0
       assert {:ok, %User{} = usr} = Accounts.create_user(@valid_user_attrs)
