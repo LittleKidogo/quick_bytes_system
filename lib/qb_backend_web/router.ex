@@ -21,7 +21,11 @@ defmodule QbBackendWeb.Router do
   end
 
   # Other scopes may use custom stacks.
-  # scope "/api", QbBackendWeb do
-  #   pipe_through :api
-  # end
+  scope "/" do
+    pipe_through(:api)
+
+    forward("/api", Absinthe.Plug, schema: QbBackendWeb.Schema)
+
+    forward("/graphiql", Absinthe.Plug.GraphiQL, schema: QbBackendWeb.Schema, interface: :simple)
+  end
 end
