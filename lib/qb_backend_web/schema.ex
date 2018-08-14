@@ -1,4 +1,7 @@
 defmodule QbBackendWeb.Schema do
+  @moduledoc """
+  This module holds the GraphQL Schema for the Little Kidogo How To Domain
+  """
   use Absinthe.Schema
 
   alias QbBackendWeb.Resolvers

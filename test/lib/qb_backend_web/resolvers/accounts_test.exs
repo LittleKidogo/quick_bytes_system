@@ -1,14 +1,12 @@
 defmodule QbBackendWeb.Resolvers.AccountsTest do
   use QbBackendWeb.ApiCase
 
-  alias QbBackendWeb.Resolvers.Accounts
+  alias QbBackend.Accounts.User
 
   @num 5
   describe "Accounts Resolver" do
     test "fetches users on the system", %{conn: conn} do
-      IO.puts("------ THE USERS --------")
-      insert_list(@num, :user) |> IO.inspect()
-      IO.puts("------ USERS END --------")
+      insert_list(@num, :user)
       assert Repo.aggregate(User, :count, :id) == @num
 
       query = """
@@ -22,8 +20,6 @@ defmodule QbBackendWeb.Resolvers.AccountsTest do
 
       res = post(conn, "api/graphiql", query: query)
 
-      IO.puts("------ THE RESULT ---------")
-      IO.inspect(res)
       %{
         "data" => %{
           "users" => people
@@ -31,7 +27,6 @@ defmodule QbBackendWeb.Resolvers.AccountsTest do
       }
       = json_response(res, 200)
 
-      IO.puts("--------- END OF RESULT -----------")
 
       assert Enum.count(people) == @num
     end
