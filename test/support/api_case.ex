@@ -26,6 +26,9 @@ defmodule QbBackendWeb.ApiCase do
       import Ecto.Query
       import QbBackend.DataCase
       import QbBackend.Factory
+
+      # The default endpoint for testing
+      @endpoint QbBackendWeb.Endpoint
     end
   end
 
