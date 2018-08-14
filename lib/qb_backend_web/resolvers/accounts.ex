@@ -17,7 +17,7 @@ defmodule QbBackendWeb.Resolvers.Accounts do
   end
 
   @spec login(any(), map, any()) :: {:ok, any()} | {:error, String.t()}
-  def login(_, %{username: username, hash: hash}, _) do
+  def login(_, %{input: %{username: username, hash: hash}}, _) do
     with {:ok, %Profile{} = current_profile} <- Auth.authenticate(username, hash),
          {:ok, token, _claims} <- Guardian.encode_and_sign(current_profile) do
       {:ok, %{profile: current_profile, token: token}}

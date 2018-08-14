@@ -4,11 +4,26 @@ defmodule QbBackendWeb.Schema do
   """
   use Absinthe.Schema
 
-  alias QbBackendWeb.Resolvers
+  alias QbBackendWeb.{
+    Resolvers,
+    Schema.Middleware
+  }
+
+
 
   # import types
   import_types(__MODULE__.AccountTypes)
   import_types(__MODULE__.PostTypes)
+
+
+  # Add middleware to fields that need it
+  def middleware(middleware, _field, %{identifier: :mutation}) do
+    middleware ++ [Middleware.ChangesetErrors]
+  end
+
+  def middleware(middleware, _, _) do
+    middleware
+  end
 
   query do
     @desc "The list of available users"
