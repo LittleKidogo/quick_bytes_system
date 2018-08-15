@@ -10,12 +10,9 @@ defmodule QbBackendWeb.Resolvers.Posts do
   }
 
   @spec add_manual(any(), map(), any()) :: {:ok, Manual.t()} | {:error, String.t()}
-  def add_manual(_, %{input: params}, _) do
-    with {:ok, %Profile{} = profile} <- Accounts.get_profile(params.profile_id),
-         {:ok, %Manual{} = mnl} <- Posts.create_manual(profile, params) do
+  def add_manual(_, %{input: params}, %{context: %{current_profile: profile}}) do
+    with {:ok, %Manual{} = mnl} <- Posts.create_manual(profile, params) do
       {:ok, mnl}
-    else
-      {:error, reason} -> {:error, reason}
     end
   end
 end

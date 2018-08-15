@@ -11,6 +11,7 @@ defmodule QbBackendWeb.Router do
 
   pipeline :api do
     plug(:accepts, ["json"])
+    plug QbBackendWeb.Context
   end
 
   scope "/", QbBackendWeb do
@@ -26,6 +27,11 @@ defmodule QbBackendWeb.Router do
 
     forward("/api", Absinthe.Plug, schema: QbBackendWeb.Schema)
 
-    forward("/graphiql", Absinthe.Plug.GraphiQL, schema: QbBackendWeb.Schema, interface: :playground)
+    forward(
+      "/graphiql",
+      Absinthe.Plug.GraphiQL,
+      schema: QbBackendWeb.Schema,
+      interface: :playground
+    )
   end
 end
