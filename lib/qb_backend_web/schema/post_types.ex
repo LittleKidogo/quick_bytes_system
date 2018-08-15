@@ -8,10 +8,10 @@ defmodule QbBackendWeb.Schema.PostTypes do
 
   @desc "posts mutations"
   object :posts_mutations do
-
     @desc "create a manual"
     field :add_manual, :manual do
       arg(:input, non_null(:add_manual_input))
+      meta: auth: ["publisher", "editor"]
       resolve(&Posts.add_manual/3)
     end
   end
@@ -27,6 +27,5 @@ defmodule QbBackendWeb.Schema.PostTypes do
   input_object :add_manual_input do
     field(:title, non_null(:string))
     field(:body, non_null(:string))
-    field(:profile_id, non_null(:id))
   end
 end
