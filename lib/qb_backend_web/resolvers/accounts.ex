@@ -5,7 +5,6 @@ defmodule QbBackendWeb.Resolvers.Accounts do
   alias QbBackend.{
     Auth,
     Auth.Guardian,
-    Accounts,
     Accounts.User,
     Accounts.Profile,
     Repo

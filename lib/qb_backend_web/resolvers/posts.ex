@@ -3,8 +3,6 @@ defmodule QbBackendWeb.Resolvers.Posts do
   A Module to hand web facing interactions for the posts context
   """
   alias QbBackend.{
-    Accounts,
-    Accounts.Profile,
     Posts,
     Posts.Manual
   }
