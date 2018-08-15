@@ -8,7 +8,7 @@ defmodule QbBackendWeb.Schema.Middleware.Authorize do
   @spec call(map(), map()) :: map()
   def call(resolution, roles) do
     with %{current_profile: profile} <- resolution.context,
-         true <- correct_role?(profile, role) do
+         true <- correct_role?(profile, roles) do
       resolution
     else
       _ ->
@@ -20,4 +20,3 @@ defmodule QbBackendWeb.Schema.Middleware.Authorize do
   defp correct_role?(%{role: role}, roles), do: Enum.member(roles, role)
   defp correct_role?(%{}, _), do: false
 end
-
