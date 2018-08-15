@@ -11,7 +11,7 @@ defmodule QbBackendWeb.Schema.PostTypes do
     @desc "create a manual"
     field :add_manual, :manual do
       arg(:input, non_null(:add_manual_input))
-      meta: auth: ["publisher", "editor"]
+      meta auth: ["publisher", "editor"]
       resolve(&Posts.add_manual/3)
     end
   end
