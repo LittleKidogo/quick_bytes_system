@@ -5,6 +5,28 @@ defmodule QbBackendWeb.Schema.AccountTypes do
   """
   use Absinthe.Schema.Notation
 
+  alias QbBackendWeb.Resolvers.Accounts
+
+
+  @desc "queries for the account types"
+  object :account_queries do
+
+    @desc "The list of available users"
+    field :users, list_of(:user) do
+      resolve(&Accounts.get_people/3)
+    end
+  end
+
+  @desc "mutations for the account types"
+  object :account_mutations do
+
+    @desc "user login"
+    field :login, :session do
+      arg(:input, non_null(:session_input))
+      resolve(&Accounts.login/3)
+    end
+  end
+
   @desc "an input object"
   input_object :session_input do
     field(:username, non_null(:string))
