@@ -9,6 +9,7 @@ defmodule QbBackendWeb.Schema.PostTypes do
   object :manual do
     field(:title, :string)
     field(:body, :string)
+    field(:id, :id)
   end
 
   @desc "input to create a manual on the system"
