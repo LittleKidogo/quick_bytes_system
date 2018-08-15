@@ -7,10 +7,8 @@ defmodule QbBackendWeb.Schema.AccountTypes do
 
   alias QbBackendWeb.Resolvers.Accounts
 
-
   @desc "queries for the account types"
   object :account_queries do
-
     @desc "The list of available users"
     field :users, list_of(:user) do
       resolve(&Accounts.get_people/3)
@@ -19,7 +17,6 @@ defmodule QbBackendWeb.Schema.AccountTypes do
 
   @desc "mutations for the account types"
   object :account_mutations do
-
     @desc "user login"
     field :login, :session do
       arg(:input, non_null(:session_input))
