@@ -10,8 +10,7 @@ defmodule QbBackendWeb.Resolvers.AccountsTest do
   describe "Accounts Resolver" do
     test "logs a user on to system", %{conn: conn} do
       {:ok, user} = User.changeset(%User{}, %{name: "zacck", hash: "12345"}) |> Repo.insert()
-      profile =  insert(:profile, user: user)
-
+      profile = insert(:profile, user: user)
 
       assert Repo.aggregate(User, :count, :id) == 1
       assert Repo.aggregate(Profile, :count, :id) == 1
@@ -38,8 +37,8 @@ defmodule QbBackendWeb.Resolvers.AccountsTest do
       res = post(conn, "api/graphiql", query: query, variables: variables)
 
       %{
-        "data" =>  %{
-          "login" =>  result
+        "data" => %{
+          "login" => result
         }
       } = json_response(res, 200)
 

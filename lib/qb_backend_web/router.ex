@@ -11,7 +11,7 @@ defmodule QbBackendWeb.Router do
 
   pipeline :api do
     plug(:accepts, ["json"])
-    plug QbBackendWeb.Context
+    plug(QbBackendWeb.Context)
   end
 
   scope "/", QbBackendWeb do

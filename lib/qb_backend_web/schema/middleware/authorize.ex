@@ -17,6 +17,6 @@ defmodule QbBackendWeb.Schema.Middleware.Authorize do
     end
   end
 
-  defp correct_role?(%{role: role}, roles), do: Enum.member(roles, role)
+  defp correct_role?(%{role: role}, roles), do: Enum.member?(roles, role)
   defp correct_role?(%{}, _), do: false
 end

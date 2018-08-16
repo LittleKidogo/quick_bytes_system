@@ -2,10 +2,10 @@ defmodule QbBackendWeb.Context do
   @moduledoc """
   This module is a plug that we use to populate the execution context for requests
   """
- @behaviour Plug
- import Plug.Conn
+  @behaviour Plug
+  import Plug.Conn
 
- def init(opts), do: opts
+  def init(opts), do: opts
 
   def call(conn, _) do
     context = build_context(conn)
@@ -19,6 +19,5 @@ defmodule QbBackendWeb.Context do
     else
       _ -> %{}
     end
- end
+  end
 end
-
