@@ -12,17 +12,18 @@ defmodule QbBackendWeb.Schema do
   import_types(__MODULE__.AccountTypes)
   import_types(__MODULE__.PostTypes)
 
-  # Add middleware to fields that need it
-  def middleware(middleware, %{identifier: field_id}, %{identifier: :mutation}) do
-    # authorization middleware
-    type = Absinthe.Schema.lookup_type(__MODULE__, :mutation)
-    auth_meta = Absinthe.Type.meta(type, :auth)
-    IO.puts("------ Allowed for #{field_id} -----------")
-    IO.inspect(auth_meta)
-    IO.puts("---------- END Allowed list -----------")
-    [{{Authorize, :call}, [auth_meta]} | middleware]
-    # end authorization
+  # Apply middleware to field depending on meta keys
+  def middleware(middleware, %{identifier: field_identifier}, %{identifier: :object_identifier}) do
+    # type = Absinthe.Schema.lookup_type(__MODULE__, object.identifier)
+    # IO.inspect(type)
+    # auth_meta = Absinthe.Type.meta(type.fields[field_id], :auth)
+    #
+    # [{{Middleware.Authorize, :call}, auth_meta} | middleware]
+    middleware
+  end
 
+  # Add middleware to fields that need it
+  def middleware(middleware, _, %{identifier: :mutation}) do
     middleware ++ [Middleware.ChangesetErrors]
   end
 
