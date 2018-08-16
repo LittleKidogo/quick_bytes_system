@@ -1,10 +1,12 @@
 defmodule QbBackendWeb.ApiCase do
   @moduledoc """
-  This module defines the setup for tests requiring
-  access to the application's GraphQL API layer.
+  This module defines the test case to be used by
+  tests that require setting up a connection working
+  on the GraphQL API endpoints
 
-  You may define functions here to be used as helpers in
-  your tests.
+  Such tests rely on `Phoenix.ConnTest` and also
+  import other functionality to make it easier
+  to build common datastructures and query the data layer.
 
   Finally, if the test case interacts with the database,
   it cannot be async. For this reason, every test runs
@@ -13,18 +15,19 @@ defmodule QbBackendWeb.ApiCase do
   """
 
   use ExUnit.CaseTemplate
-  use Phoenix.ConnTest
   import QbBackend.Factory
+  use Phoenix.ConnTest
 
   using do
     quote do
+      # Import conveniences for testing with connections
       use Phoenix.ConnTest
+      import QbBackendWeb.Router.Helpers
       alias QbBackend.Repo
 
       import Ecto
       import Ecto.Changeset
       import Ecto.Query
-      import QbBackend.DataCase
       import QbBackend.Factory
 
       # The default endpoint for testing
@@ -32,35 +35,36 @@ defmodule QbBackendWeb.ApiCase do
     end
   end
 
-  setup tags do
+  setup context do
     :ok = Ecto.Adapters.SQL.Sandbox.checkout(QbBackend.Repo)
 
-    unless tags[:async] do
+    unless context[:async] do
       Ecto.Adapters.SQL.Sandbox.mode(QbBackend.Repo, {:shared, self()})
     end
 
-    # get the current profile using a tag
-    # it the test has the authenticated tag the conn is given a profile to auth
-    # with this should be extended to allow types of profiles
 
-    # credo:disable-for-lines:10
-    {conn, current_profile} =
+    {conn, profile} =
+      # credo:disable-for-next-line
       cond do
-        tags[:authenticated] ->
+        context[:authenticated] ->
           build_conn()
-          |> add_auth_header(tags[:authenticated])
+          |> add_authentication_headers(context[:authenticated])
 
         true ->
           conn = build_conn()
           {conn, nil}
       end
 
-    {:ok, conn: conn, current_profile: current_profile}
+    {:ok, conn: conn, current_profile: profile}
   end
 
-  defp add_auth_header(conn, true) do
-    profile = insert(:profile)
+  # add information to connection
+  @spec add_authentication_headers(Plug.Conn.t(), String.t()) :: {Plug.Conn.t(), any()}
+  defp add_authentication_headers(conn, role) do
+    profile = insert(:profile, role: role)
 
-    conn |> QbBackend.AuthenticationTestHelpers.authenticate(profile)
+    conn = conn |> QbBackend.AuthenticationTestHelpers.authenticate(profile)
+
+    {conn, profile}
   end
 end
