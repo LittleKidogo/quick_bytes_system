@@ -5,6 +5,11 @@ defmodule QbBackendWeb.Schema.Middleware.Authorize do
   """
   @behaviour Absinthe.Middleware
 
+  @doc """
+  This function adds the profile connected to the currently signed in token to
+  the exction context. If a token it missing or a user tries an action that
+  they are unauthorized to it will reply with an authorization error 
+  """
   @spec call(map(), list()) :: map()
   def call(resolution, roles) do
     with %{current_profile: profile} <- resolution.context,

@@ -5,6 +5,11 @@ defmodule QbBackendWeb.Schema.Middleware.ChangesetErrors do
   """
   @behaviour Absinthe.Middleware
 
+  @doc """
+  This fuction takes an Absinthe resolution and checkes it for Changeset Errors
+  If it finds errors it formats them into a helpful fashion
+  """
+  @spec call(map(), any()) :: map()
   def call(res, _) do
     %{res | errors: Enum.flat_map(res.errors, &transform_error/1)}
   end
