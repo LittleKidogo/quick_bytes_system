@@ -5,7 +5,7 @@ defmodule QbBackendWeb.Schema.Middleware.Authorize do
   """
   @behaviour Absinthe.Middleware
 
-  @spec call(map(), map()) :: map()
+  @spec call(map(), list()) :: map()
   def call(resolution, roles) do
     with %{current_profile: profile} <- resolution.context,
          true <- correct_role?(profile, roles) do
@@ -17,6 +17,7 @@ defmodule QbBackendWeb.Schema.Middleware.Authorize do
     end
   end
 
+  @spec correct_role?(map(), list(String.t())) :: boolean()
   defp correct_role?(%{role: role}, roles), do: Enum.member?(roles, role)
   defp correct_role?(%{}, _), do: false
 end

@@ -9,7 +9,7 @@ defmodule QbBackendWeb.Resolvers.AccountsTest do
   @num 5
   describe "Accounts Resolver" do
     test "logs a user on to system", %{conn: conn} do
-      {:ok, user} = User.changeset(%User{}, %{name: "zacck", hash: "12345"}) |> Repo.insert()
+      {:ok, user} = %User{} |> User.changeset(%{name: "zacck", hash: "12345"}) |> Repo.insert()
       profile = insert(:profile, user: user)
 
       assert Repo.aggregate(User, :count, :id) == 1
