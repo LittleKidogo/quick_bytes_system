@@ -22,6 +22,7 @@ defmodule QbBackend.AuthenticationTestHelpers do
   when given a connection to authenticate with a user create a jwt token for the
   user and attacj it as a request header to the connection
   """
+  @spec authenticate(Plug.Conn.t(), any()) :: Plug.Conn.t()
   def authenticate(conn, profile) do
     # get the token for the user
     {:ok, token, _} = profile |> QbBackend.Auth.Guardian.encode_and_sign()
