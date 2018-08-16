@@ -13,13 +13,15 @@ defmodule QbBackendWeb.Schema do
   import_types(__MODULE__.PostTypes)
 
   # Apply middleware to field depending on meta keys
-  def middleware(middleware, %{identifier: _field_identifier}, %{identifier: _object_identifier}) do
-    # type = Absinthe.Schema.lookup_type(__MODULE__, object.identifier)
-    # IO.inspect(type)
-    # auth_meta = Absinthe.Type.meta(type.fields[field_id], :auth)
-    #
-    # [{{Middleware.Authorize, :call}, auth_meta} | middleware]
-    middleware
+  def middleware(middleware, %{identifier: _fid} = field, _object) do
+    meta = Absinthe.Type.meta(field, :auth)
+
+    case meta do
+      nil ->
+        middleware
+      meta ->
+      [{{Middleware.Authorize, :call}, meta} | middleware]
+    end
   end
 
   # Add middleware to fields that need it
