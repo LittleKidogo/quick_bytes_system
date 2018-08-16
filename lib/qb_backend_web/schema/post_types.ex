@@ -15,7 +15,8 @@ defmodule QbBackendWeb.Schema.PostTypes do
     @desc "create a manual"
     field :add_manual, :manual do
       arg(:input, non_null(:add_manual_input))
-      middleware(Middleware.Authorize, ["publisher", "author"])
+      # middleware(Middleware.Authorize, ["publisher", "author"])
+      meta auth: ["publisher", "author"]
       resolve(&Posts.add_manual/3)
     end
   end
