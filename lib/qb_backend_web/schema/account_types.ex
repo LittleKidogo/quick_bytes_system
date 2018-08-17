@@ -24,6 +24,15 @@ defmodule QbBackendWeb.Schema.AccountTypes do
     end
   end
 
+  @desc "mutations to create a new user "
+  object :user_mutations do
+    @desc "user sign up"
+    field :sign_up, :user do
+      arg(:input, non_null(:sign_up_input))
+      resolve(&Accounts.sign_up/3)
+    end
+  end
+
   @desc "an input object"
   input_object :session_input do
     field(:username, non_null(:string))
@@ -50,5 +59,11 @@ defmodule QbBackendWeb.Schema.AccountTypes do
     field(:role, :string)
     field(:bio, :string)
     field(:avatar_link, :string)
+  end
+
+  @desc "contains input object for a user"
+  input_object :sign_up_input do
+    field(:name, non_null(:string))
+    field(:hash, non_null(:string))
   end
 end
