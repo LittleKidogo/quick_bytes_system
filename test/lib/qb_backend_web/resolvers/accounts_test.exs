@@ -70,5 +70,36 @@ defmodule QbBackendWeb.Resolvers.AccountsTest do
 
       assert Enum.count(people) == @num
     end
+
+    test "adds a user to system", %{conn: conn} do
+      assert Repo.aggregate(User, :count, :id) == 0
+
+      variables = %{
+        "input" => %{
+          "hash" => "$2b$12$yPihwzdz/4XPRd3bK2WC9eCCpBeCDU32e7cxtqEDpqOpQ/AsdBFrC",
+          "name" => "Zacck Osiemo"
+        }
+      }
+
+      query = """
+        mutation($input: SignUpInput!){
+          sign_up(input: $input){
+            name
+            hash
+          }
+        }
+      """
+
+      res = post(conn, "api/graphiql", query: query, variables: variables)
+
+      %{
+        "data" => %{
+          "sign_up" => user
+        }
+      } = json_response(res, 200)
+
+      assert Repo.aggregate(User, :count, :id) == 1
+      assert user["name"] == variables["input"]["name"]
+    end
   end
 end
