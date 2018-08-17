@@ -7,6 +7,7 @@ defmodule QbBackendWeb.Resolvers.Accounts do
     Auth.Guardian,
     Accounts.User,
     Accounts.Profile,
+    Accounts,
     Repo
   }
 
@@ -23,5 +24,10 @@ defmodule QbBackendWeb.Resolvers.Accounts do
     else
       {:error, reason} -> {:error, reason}
     end
+  end
+
+  @spec sign_up(any(), map, any()) :: {:ok, any()} | {:error, String.t()}
+  def sign_up(_, %{input: attrs}, _) do
+    Accounts.create_user(attrs)
   end
 end
