@@ -56,7 +56,6 @@ defmodule QbBackendWeb.Resolvers.PostsTest do
 
     res = post(conn, "api/graphiql", query: query, variables: variables)
 
-
     %{
       "data" => %{
         "addComment" => comment
@@ -85,7 +84,6 @@ defmodule QbBackendWeb.Resolvers.PostsTest do
     """
 
     res = post(conn, "api/graphiql", query: query, variables: variables)
-
 
     %{
       "errors" => [error]
