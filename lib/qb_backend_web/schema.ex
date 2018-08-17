@@ -19,8 +19,9 @@ defmodule QbBackendWeb.Schema do
     case meta do
       nil ->
         middleware
+
       meta ->
-      [{{Middleware.Authorize, :call}, meta} | middleware]
+        [{{Middleware.Authorize, :call}, meta} | middleware]
     end
   end
 
@@ -40,5 +41,7 @@ defmodule QbBackendWeb.Schema do
   mutation do
     import_fields(:account_mutations)
     import_fields(:posts_mutations)
+    import_fields(:comments_mutations)
+    import_fields(:user_mutations)
   end
 end
