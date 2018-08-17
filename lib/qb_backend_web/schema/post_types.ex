@@ -16,8 +16,17 @@ defmodule QbBackendWeb.Schema.PostTypes do
     field :add_manual, :manual do
       arg(:input, non_null(:add_manual_input))
       # middleware(Middleware.Authorize, ["publisher", "author"])
-      meta auth: ["publisher", "author"]
+      meta(auth: ["publisher", "author"])
       resolve(&Posts.add_manual/3)
+    end
+  end
+
+  object :comments_mutations do
+    @desc "adds a comment"
+    field :add_comment, :comment do
+      arg(:input, non_null(:add_comment_input))
+      meta(auth: ["publisher", "author", "reader"])
+      resolve(&Posts.add_comment/3)
     end
   end
 
@@ -32,5 +41,19 @@ defmodule QbBackendWeb.Schema.PostTypes do
   input_object :add_manual_input do
     field(:title, non_null(:string))
     field(:body, non_null(:string))
+  end
+
+  @desc "comment type"
+  object :comment do
+    field(:body, :string)
+    field(:id, :id)
+    field(:profile_id, :id)
+    field(:manual_id, :id)
+  end
+
+  @desc "input to add a comment on a manual"
+  input_object :add_comment_input do
+    field(:body, non_null(:string))
+    field(:manual_id, non_null(:id))
   end
 end
