@@ -1,24 +1,32 @@
-FROM littlekidogo/alpine-elixir-phoenix
 
-MAINTAINER Little Kidogo <greetings@littlekidogo.co.za>
+FROM alpine:3.6
 
-RUN apk add --no-cache openssh
+# we need bash and openssl for Phoenix
+RUN apk upgrade --no-cache && \
+    apk add --no-cache bash openssl
+
+# set and expose port
+EXPOSE 5002
+
+ENV PORT=5002 \
+    REPLACE_OS_VARS=true \
+    SHELL=/bin/bash
+
+ARG VERSION
+
+ARG SEMVERSION=0.0.1
 
 
-# Install dockerize
+WORKDIR /app
 
-RUN wget https://github.com/jwilder/dockerize/releases/download/v0.6.1/dockerize-alpine-linux-amd64-v0.6.1.tar.gz \
-    && tar -C /usr/local/bin -xzvf dockerize-alpine-linux-amd64-v0.6.1.tar.gz \
-    && rm dockerize-alpine-linux-amd64-v0.6.1.tar.gz
+ADD Dockerfile /app
+#copy release artefact from last stage
+ADD _build/prod/rel/qb_backend/releases/${SEMVERSION}/qb_backend.tar.gz /app
 
+RUN chown -R root ./releases
 
-# Add docker
+USER root
 
-RUN apk add docker
+ENTRYPOINT ["/app/bin/qb_backend"]
 
-# Install Semantic Release
-
-ENV SEMANTIC_RELEASE_VERSION=1.9.1
-
-ADD https://github.com/go-semantic-release/semantic-release/releases/download/v${SEMANTIC_RELEASE_VERSION}/semantic-release_v${SEMANTIC_RELEASE_VERSION}_linux_amd64 /usr/local/bin/semantic-release
-RUN chmod a+x /usr/local/bin/semantic-release
+CMD ["foreground"]
