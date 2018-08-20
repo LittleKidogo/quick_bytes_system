@@ -17,5 +17,5 @@ services:
     volumes:
       - qb-staging:/var/lib/postgresql
 volumes:
-  mula-staging:
+  qb-staging:
     external: true
