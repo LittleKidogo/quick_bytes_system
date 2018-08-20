@@ -9,15 +9,6 @@ config :qb_backend, QbBackendWeb.Endpoint,
   version: Application.spec(:qb_backend, :vsn)
 
 
-# Configure your database
-config :spender, Spender.Repo,
-  adapter: Ecto.Adapters.Postgres,
-  hostname: "${DB_HOSTNAME}",
-  username: "${DB_USERNAME}",
-  password: "${DB_PASSWORD}",
-  database: "${DB_NAME}",
-  port: "${DB_PORT}",
-  pool_size: 15
 
 # Do not print debug messages in production
 config :logger, level: :info
