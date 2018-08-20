@@ -74,6 +74,32 @@ jobs:
             else
               MIX_ENV=test mix coveralls.circle;
             fi
+      - persist_to_workspace:
+          root: /opt/app
+          paths:
+            - project
+  deploy-staging:
+   docker:
+     - image: littlekidogo/phoenix-deploy
+       environment:
+         MIX_ENV: prod
+   steps:
+     - attach_workspace:
+        at: /opt/app
+     - setup_remote_docker
+     - run:
+        name: Get Dependecies
+        command: mix deps.get
+     # SSH KEYS FOR CIRCLE
+     - add_ssh_keys:
+        fingerprints:
+          - "e7:da:d1:bd:71:96:ca:11:28:77:12:29:d8:0a:f4:9a"
+     - run:
+        name: Make deploy scripts executable
+        command: find ci/staging/ -type f -iname "*.sh" -exec chmod +x {} \;
+     - run:
+        name: Deploying to staging
+        command: ci/staging/deploy.sh
 
 workflows:
   version: 2
@@ -83,3 +109,9 @@ workflows:
       - test:
           requires:
             - build
+      - deploy-staging:
+          requires:
+            - test
+          filters:
+            branches:
+              only: develop
