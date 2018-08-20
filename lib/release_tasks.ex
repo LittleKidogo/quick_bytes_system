@@ -1,4 +1,8 @@
 defmodule QbBackend.ReleaseTasks do
+  @moduledoc """
+  This module gets compiled along with the rest of the application
+  and is used when running migrations in deployment envs
+  """
   @start_apps [
     :crypto,
     :ssl,

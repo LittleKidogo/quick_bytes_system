@@ -42,8 +42,8 @@ defmodule QbBackendWeb.ApiCase do
       Ecto.Adapters.SQL.Sandbox.mode(QbBackend.Repo, {:shared, self()})
     end
 
-    # credo:disable-for-next-line
     {conn, profile} =
+      # credo:disable-for-next-line
       cond do
         context[:authenticated] ->
           build_conn()
