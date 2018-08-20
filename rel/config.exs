@@ -35,7 +35,7 @@ environment :dev do
 end
 
 environment :prod do
-  set pre_start_hooks: "rel/hooks"
+  set pre_start_hooks: "rel/hooks/pre_start"
   set include_erts: true
   set include_src: false
   set cookie: "${PROD_COOKIE}"
