@@ -5,7 +5,7 @@ services:
     env_file:
       - web.env
     ports:
-      - "5002:5002"
+      - "9032:9032"
     links:
       - db
   db:
