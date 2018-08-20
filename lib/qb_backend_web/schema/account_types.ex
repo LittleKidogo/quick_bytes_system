@@ -17,16 +17,13 @@ defmodule QbBackendWeb.Schema.AccountTypes do
 
   @desc "mutations for the account types"
   object :account_mutations do
-    @desc "user login"
+    @desc "user login mutation"
     field :login, :session do
       arg(:input, non_null(:session_input))
       resolve(&Accounts.login/3)
     end
-  end
 
-  @desc "mutations to create a new user "
-  object :user_mutations do
-    @desc "user sign up"
+    @desc "user sign up mutation"
     field :sign_up, :user do
       arg(:input, non_null(:sign_up_input))
       resolve(&Accounts.sign_up/3)
@@ -49,7 +46,6 @@ defmodule QbBackendWeb.Schema.AccountTypes do
   object :user do
     field(:id, :id)
     field(:name, :string)
-    field(:hash, :string)
   end
 
   @desc "Contains a profile object of user on the system"

@@ -6,9 +6,11 @@
 
 .DS_Store
 .qb_backend.iml
-.idea 
+.idea
 qb_backend.iml
 /.elixir_ls
+web.env
+db.env
 
 
 # Generated on crash by the VM

@@ -53,7 +53,7 @@ defmodule QbBackendWeb.Resolvers.AccountsTest do
 
       query = """
       query {
-        users{
+        Users{
           name
           id
         }
@@ -64,7 +64,7 @@ defmodule QbBackendWeb.Resolvers.AccountsTest do
 
       %{
         "data" => %{
-          "users" => people
+          "Users" => people
         }
       } = json_response(res, 200)
 
@@ -83,9 +83,8 @@ defmodule QbBackendWeb.Resolvers.AccountsTest do
 
       query = """
         mutation($input: SignUpInput!){
-          sign_up(input: $input){
+          signUp(input: $input){
             name
-            hash
           }
         }
       """
@@ -94,7 +93,7 @@ defmodule QbBackendWeb.Resolvers.AccountsTest do
 
       %{
         "data" => %{
-          "sign_up" => user
+          "signUp" => user
         }
       } = json_response(res, 200)
 
