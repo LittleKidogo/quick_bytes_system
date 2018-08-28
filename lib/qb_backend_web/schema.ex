@@ -12,22 +12,26 @@ defmodule QbBackendWeb.Schema do
   import_types(__MODULE__.AccountTypes)
   import_types(__MODULE__.PostTypes)
 
+
   # Apply middleware to field depending on meta keys
-  def middleware(middleware, %{identifier: _fid} = field, _object) do
+  def middleware(middleware, %{identifier: _fid} = field, %{identifier: oid}) do
+    middleware = 
+    case oid do 
+      :mutation ->
+         middleware ++ [Middleware.ChangesetErrors]
+
+      _ -> middleware
+    end 
+    
     meta = Absinthe.Type.meta(field, :auth)
 
     case meta do
       nil ->
         middleware
-
+    
       meta ->
         [{{Middleware.Authorize, :call}, meta} | middleware]
     end
-  end
-
-  # Add middleware to fields that need it
-  def middleware(middleware, _, %{identifier: :mutation}) do
-    middleware ++ [Middleware.ChangesetErrors]
   end
 
   def middleware(middleware, _, _) do
