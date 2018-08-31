@@ -5,9 +5,7 @@ defmodule QbBackendWeb.Resolvers.Posts do
   alias QbBackend.{
     Posts,
     Posts.Manual,
-    Posts.Comment,
-    Accounts.Profile,
-    Accounts
+    Posts.Comment
   }
 
   @doc """
