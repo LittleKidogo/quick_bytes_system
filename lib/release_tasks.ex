@@ -19,7 +19,7 @@ defmodule QbBackend.ReleaseTasks do
 
     IO.puts "Loading #{me}.."
     # Load the code for myapp, but don't start it
-    :ok = Application.load(me)
+    Application.load(me)
 
     IO.puts "Starting dependencies.."
     # Start apps necessary for executing migrations
