@@ -1,3 +1,3 @@
 #!/bin/sh
 
-release_ctl  eval "QbBackend.ReleaseTasks.migrate()"
+release_ctl eval --mfa "QbBackend.ReleaseTasks.migrate/1" -- "$@"
