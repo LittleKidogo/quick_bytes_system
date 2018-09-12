@@ -10,10 +10,9 @@ defmodule QbBackend.ReleaseTasks do
     :ecto
   ]
 
-  @app :qb_backend
-  @repos Application.get_env(@app, :ecto_repos, [])
+  @repos Application.get_env(:qb_backend, :ecto_repos, [])
 
-  def migrate do
+  def migrate(_argv) do
     start_services()
 
     run_migrations()
@@ -21,7 +20,7 @@ defmodule QbBackend.ReleaseTasks do
     stop_services()
   end
 
-  def seed do
+  def seed(_argv) do
     start_services()
 
     run_migrations()
@@ -32,11 +31,6 @@ defmodule QbBackend.ReleaseTasks do
   end
 
   defp start_services do
-    IO.puts("Loading #{@app}..")
-
-    # Load the code for myapp, but don't start it
-    Application.load(@app)
-
     IO.puts("Starting dependencies..")
     # Start apps necessary for executing migrations
     Enum.each(@start_apps, &Application.ensure_all_started/1)
