@@ -10,7 +10,7 @@ defmodule QbBackend.ReleaseTasks do
     :ecto
   ]
 
-  @app :my_app
+  @app :qb_backend
   @repos Application.get_env(@app, :ecto_repos, [])
 
   def migrate do
