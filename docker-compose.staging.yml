@@ -12,8 +12,6 @@ services:
     image: postgres:latest
     env_file:
       - db.env
-    ports:
-      - "5433:5433"
     volumes:
       - qb-staging:/var/lib/postgresql
 volumes:
