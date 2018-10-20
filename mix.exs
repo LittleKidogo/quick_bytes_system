@@ -56,7 +56,12 @@ defmodule QbBackend.Mixfile do
       {:excoveralls, "~> 0.8", only: :test},
       {:absinthe_ecto, "~> 0.1.0"},
       {:absinthe_plug, "~> 1.4.0"},
-      {:distillery, "~> 2.0.9"}
+      {:distillery, "~> 2.0.9"},
+      {:ex_aws, "~> 2.0"},
+      {:ex_aws_s3, "~> 2.0"},
+      {:hackney, "~> 1.9"},
+      {:uuid, "~> 1.1" },
+      {:poison, "~>2.0"}
     ]
   end
 
