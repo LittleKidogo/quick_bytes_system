@@ -27,6 +27,13 @@ config :qb_backend, QbBackend.Auth.Guardian,
   issuer: "qb_backend",
   secret_key: "tPuIAA500x8K8lUP0rVol016NgT5wif2ELW3vijQUESfvhNfw1tIKpYLe7mSknEm"
 
+# Configure ex_aws
+config :ex_aws,
+  access_key_id: ["AKIA5QEQH7C7JAAM2F3W", :instance_role],
+  secret_access_key: ["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", :instance_role],
+  s3: [
+    scheme: "https://",
+  ]
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env()}.exs"
