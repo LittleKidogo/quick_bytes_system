@@ -10,7 +10,8 @@ defmodule QbBackend.Factory do
     Posts.Manual,
     Posts.Comment,
     Posts.Image,
-    Posts.Tag
+    Posts.Tag,
+    Posts.Bookmark
   }
 
   def user_factory do
@@ -56,6 +57,11 @@ defmodule QbBackend.Factory do
   def tag_factory do
     %Tag{
       name: sequence(:name, &"name-#{&1}")
+    }
+  end
+  def bookmark_factory do
+    %Bookmark{
+      profile: build(:profile)
     }
   end
 end
