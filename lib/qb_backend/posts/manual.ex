@@ -8,7 +8,8 @@ defmodule QbBackend.Posts.Manual do
   alias QbBackend.{
     Accounts.Profile,
     Posts.Manual,
-    Posts.Tag
+    Posts.Tag,
+    Posts.Bookmark
   }
 
   @type t :: %__MODULE__{}
@@ -21,6 +22,7 @@ defmodule QbBackend.Posts.Manual do
     field(:title, :string)
     field(:body, :string)
     belongs_to(:profile, Profile, foreign_key: :profile_id, type: :binary_id)
+    belongs_to(:bookmark, Bookmark, foreign_key: :bookmark_id, type: :binary_id, on_replace: :delete)
 
     many_to_many(
       :tags,
@@ -32,7 +34,7 @@ defmodule QbBackend.Posts.Manual do
   end
 
   @doc """
-    This changeset takes in a struct and a map containig parameters
+    This changeset takes in a struct and a map containing parameters
     and proceeds to match the parameters in the map to the schema above
   """
   @spec changeset(Manual.t(), map()) :: Ecto.Changeset.t()
@@ -53,4 +55,27 @@ defmodule QbBackend.Posts.Manual do
     |> Manual.changeset(attrs)
     |> put_assoc(:profile, profile)
   end
+@doc """
+  This function takes a bookmark and a manual and creates an association between them
+  """
+  @spec add_to_bookmark(Manual.t(), Bookmark.t()) :: {:ok, Manual.t()} | {:error, Ecto.Changeset.t()}
+  def add_to_bookmark(%Manual{} = manual, %Bookmark{} = bookmark) do
+    manual
+    |> changeset(%{})
+    |> put_assoc(:bookmark, bookmark)
+  end
+
+  @doc """
+  This function  takes an item and removes the cart association from it
+  """
+  @spec remove_manual_from_bookmark(Manual.t()) :: {:ok, Itemual.t()} | {:error, Ecto.Changeset.t()}
+  def remove_manual_from_bookmark(%Manual{bookmark: _bkmark} = manual) do
+    manual
+    |> changeset(%{})
+    |> put_change(:bookmark_id, nil)
+    |> put_change(:bookmark, nil)
+  end
+
+
+
 end
