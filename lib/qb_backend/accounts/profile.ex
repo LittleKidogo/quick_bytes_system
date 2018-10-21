@@ -9,7 +9,8 @@ defmodule QbBackend.Accounts.Profile do
 
   alias QbBackend.{
     Accounts.User,
-    Accounts.Profile
+    Accounts.Profile,
+    Posts.Bookmark
   }
 
   @type t :: %__MODULE__{}
@@ -25,6 +26,7 @@ defmodule QbBackend.Accounts.Profile do
     field(:role, :string)
     field(:avatar_link, :string)
     belongs_to(:user, User, foreign_key: :user_id, type: :binary_id)
+    has_many(:bookmark, Bookmark)
 
     timestamps(inserted_at: :created_on, updated_at: :modified_on)
   end
