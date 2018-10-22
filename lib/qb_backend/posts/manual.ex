@@ -22,11 +22,15 @@ defmodule QbBackend.Posts.Manual do
     field(:title, :string)
     field(:body, :string)
     belongs_to(:profile, Profile, foreign_key: :profile_id, type: :binary_id)
-    belongs_to(:bookmark, Bookmark, foreign_key: :bookmark_id, type: :binary_id, on_replace: :delete)
 
     many_to_many(
-      :tags,
-      Tag,
+      :bookmarks, Bookmark,
+      join_through: "bookmarks_manuals",
+      join_keys: [manual_id: :id, bookmark_id: :id],
+      on_replace: :delete)
+
+    many_to_many(
+      :tags, Tag,
       join_through: "manuals_tags",
       join_keys: [manual_id: :id, tag_id: :id],
       on_replace: :delete
@@ -68,14 +72,11 @@ defmodule QbBackend.Posts.Manual do
   @doc """
   This function  takes an item and removes the cart association from it
   """
-  @spec remove_manual_from_bookmark(Manual.t()) :: {:ok, Itemual.t()} | {:error, Ecto.Changeset.t()}
-  def remove_manual_from_bookmark(%Manual{bookmark: _bkmark} = manual) do
+  @spec remove_manual_from_bookmark(Manual.t()) :: {:ok, Manual.t()} | {:error, Ecto.Changeset.t()}
+  def remove_manual_from_bookmark(%Manual{bookmarks: _bookmark} = manual) do
     manual
     |> changeset(%{})
     |> put_change(:bookmark_id, nil)
     |> put_change(:bookmark, nil)
   end
-
-
-
 end
