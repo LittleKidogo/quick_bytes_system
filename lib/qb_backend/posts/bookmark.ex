@@ -11,7 +11,14 @@ defmodule QbBackend.Posts.Bookmark do
   }
 
   schema "bookmarks" do
-    has_many(:manuals, Manual, on_replace: :delete)
+    field(:category, :string)
+
+    many_to_many(
+    :manuals, Manual,
+    join_through: "bookmarks_manuals",
+    join_keys: [bookmark_id: :id, manual_id: :id],
+    on_replace: :delete)
+
     belongs_to(:profile, Profile, foreign_key: :profile_id, type: :binary_id)
 
     timestamps(inserted_at: :added_on, updated_at: :updated_on)
@@ -43,7 +50,7 @@ defmodule QbBackend.Posts.Bookmark do
   def add_manual_to_bookmark(%Bookmark{id: _id, manuals: manuals} = bookmark, %Manual{} = manual) do
     bookmark
     |> changeset(%{})
-    |> put_assoc(:manuals, manuals ++ [manual])
+    |> put_assoc(:manuals, [manual] ++ manuals)
   end
 
   @doc """
