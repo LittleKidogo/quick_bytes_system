@@ -11,7 +11,7 @@ defmodule QbBackend.MediaAssetsManager do
 
     filename =
       binary_data
-      |> image_extension()
+      |> file_extension()
       |> unique_filename()
 
     case do_upload(asset_bucket, filename, binary_data) do
@@ -38,7 +38,27 @@ defmodule QbBackend.MediaAssetsManager do
   end
 
   # pattern match binary to file type
-  defp image_extension(<<0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A, _::binary>>), do: ".png"
-  defp image_extension(<<0xFF, 0xD8, _::binary>>), do: ".jpg"
-  defp image_extension(_),  do: :ignore
+
+  @spec file_extension(any()) :: String.t()
+  def file_extension(bin_data) do
+    case bin_data do
+      <<0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A, _::binary>> ->
+        ".png"
+
+      <<0xFF, 0xD8, _::binary>> ->
+        ".jpg"
+
+      <<0x1A, 0x45, 0xDF, 0xA3, _::binary>> ->
+        ".webm"
+
+      <<0x50, 0x4B, 0x03, 0x04, 0x14, 0x00, 0x06, 0x00, _::binary>> ->
+        ".pptx"
+
+      <<0x47, 0x49, 0x46, 0x38, _::binary>> ->
+        ".gif"
+
+      _any_other ->
+        :ignore
+    end
+  end
 end
