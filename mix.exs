@@ -61,7 +61,7 @@ defmodule QbBackend.Mixfile do
       {:ex_aws_s3, "~> 2.0"},
       {:hackney, "~> 1.9"},
       {:uuid, "~> 1.1" },
-      {:poison, "~>3.1"}
+      {:poison, "~>2.0"}
     ]
   end
 
