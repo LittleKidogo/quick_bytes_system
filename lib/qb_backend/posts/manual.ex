@@ -59,24 +59,18 @@ defmodule QbBackend.Posts.Manual do
     |> Manual.changeset(attrs)
     |> put_assoc(:profile, profile)
   end
-@doc """
-  This function takes a bookmark and a manual and creates an association between them
-  """
-  @spec add_to_bookmark(Manual.t(), Bookmark.t()) :: {:ok, Manual.t()} | {:error, Ecto.Changeset.t()}
-  def add_to_bookmark(%Manual{} = manual, %Bookmark{} = bookmark) do
-    manual
-    |> changeset(%{})
-    |> put_assoc(:bookmark, bookmark)
-  end
 
   @doc """
-  This function  takes an item and removes the cart association from it
+  This function takes a manual and a bookmark and creates an association between them
+
+  Parameters:
+  * `bookmark` - a valid bookmark in the system
+  * `manual` - a valid manual in the system
   """
-  @spec remove_manual_from_bookmark(Manual.t()) :: {:ok, Manual.t()} | {:error, Ecto.Changeset.t()}
-  def remove_manual_from_bookmark(%Manual{bookmarks: _bookmark} = manual) do
+  @spec add_to_bookmark(Manual.t(), Bookmark.t()) :: {:ok, Bookmark.t()} | {:error, Ecto.Changeset.t()}
+  def add_to_bookmark(%Manual{id: _id, bookmarks: bookmarks} = manual, %Bookmark{} = bookmark) do
     manual
     |> changeset(%{})
-    |> put_change(:bookmark_id, nil)
-    |> put_change(:bookmark, nil)
+    |> put_assoc(:bookmarks, bookmarks ++ [bookmark])
   end
 end
