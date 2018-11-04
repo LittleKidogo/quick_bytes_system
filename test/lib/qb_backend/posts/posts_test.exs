@@ -8,7 +8,8 @@ defmodule QbBackend.PostsTest do
     Posts,
     Posts.Manual,
     Posts.Comment,
-    Posts.Image
+    Posts.Image,
+    Posts.Bookmark
   }
 
   @id "a7062358-021d-4273-827a-87c38cb213fe"
@@ -123,6 +124,24 @@ defmodule QbBackend.PostsTest do
       {:ok, %Image{} = del_img} = Posts.delete_image(img)
       assert Repo.aggregate(Image, :count, :id) == 0
       assert del_img.id == img.id
+    end
+
+    test "add_bookmark actually adds a manual to a bookmark" do
+      manual = insert(:manual)
+      bookmark = insert(:bookmark)
+      assert Repo.aggregate(Manual, :count, :id) == 1
+      assert Repo.aggregate(Bookmark, :count, :id) == 1
+      loaded_bookmark = bookmark |> Repo.preload(:manuals)
+      assert loaded_bookmark.manuals == []
+      {:ok, %Bookmark{}} = Posts.add_manual(bookmark, manual)
+      assert Repo.aggregate(Manual, :count, :id) == 1
+      assert Repo.aggregate(Bookmark, :count, :id) == 1
+      loaded_updated_bookmark = bookmark |> Repo.preload(:manuals)
+      [assoc_manual] = loaded_updated_bookmark.manuals
+      assert assoc_manual.id == manual.id
+      loaded_assoc_manual = assoc_manual |> Repo.preload(:bookmarks)
+      assert [saved_bookmark | _ ] = loaded_assoc_manual.bookmarks
+      assert saved_bookmark.id == bookmark.id
     end
   end
 end
