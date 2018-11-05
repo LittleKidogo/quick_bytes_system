@@ -89,6 +89,9 @@ defmodule QbBackend.Posts do
 
   @doc """
   this function deletes an image struct from a manual
+
+  parameters
+  * `image` - an already existing image in the system
   """
   @spec delete_image(Image.t()) :: {:ok, Image.t()} | {:error, Ecto.Changeset.t()}
   def delete_image(%Image{} = image) do
@@ -98,6 +101,10 @@ defmodule QbBackend.Posts do
 
   @doc """
   This function actually adds the manual struct to the bookmark
+
+  parameters
+  * `bookmark` - a valid bookmark in the system could
+  * `manual` - a new manual that is being added to an already existing bookmark category
   """
 @spec add_manual(Bookmark.t(), Manual.t()) :: {:ok, Bookmark.t()} | {:error, Ecto.Changeset.t()}
   def add_manual(%Bookmark{} = bookmark, %Manual{} = manual) do
